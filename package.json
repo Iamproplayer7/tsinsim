@@ -1,0 +1,37 @@
+{
+	"name": "tsinsim",
+	"version": "1.0.0",
+	"description": "An InSim library for Node.js (JavaScript runtime environment) with TypeScript support.",
+	"main": "./dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsx watch ./src/index.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Iamproplayer7/tsinsim.git"
+	},
+	"keywords": [
+		"lfs",
+		"live",
+		"for",
+		"speed",
+		"insim",
+		"node",
+		"nodejs",
+		"node.js",
+		"typescript"
+	],
+	"author": "Vidmantas",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Iamproplayer7/tsinsim/issues"
+	},
+	"homepage": "https://github.com/Iamproplayer7/tsinsim#readme",
+	"devDependencies": {
+		"typescript": "^5.4.5"
+	},
+	"dependencies": {
+		"tsx": "^4.11.2"
+	}
+}

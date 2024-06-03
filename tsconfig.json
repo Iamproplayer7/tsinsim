@@ -1,0 +1,35 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./src",
+		"typeRoots": ["node_modules/@types"],
+
+		"removeComments": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "noImplicitReturns": true,
+
+		"allowJs": true,
+		"resolveJsonModule": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+
+		"strict": true,
+		"module": "NodeNext", 
+		"target": "ES2022",                           
+		"moduleResolution": "NodeNext",
+		
+		"outDir": "./dist",
+		"rootDir": "./src",
+		
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+        "declaration": true,
+        "emitDeclarationOnly": false
+	},
+	"include": [
+		"src/**/*.ts"
+	]
+}
