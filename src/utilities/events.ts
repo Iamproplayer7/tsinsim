@@ -1,4 +1,4 @@
-import { PacketType } from "packets/types/Packet.js";
+import { PacketType } from "packets/types/index.js";
 
 type Name = PacketType | 'connect' | 'disconnect';
 type Callback = (data: object) => void;
