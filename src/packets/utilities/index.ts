@@ -3,7 +3,6 @@ import { PacketPack } from "./pack.js";
 import { PacketUnpack } from "./unpack.js";
 import { PacketType } from "packets/types/index.js";
 
-
 export class Receivable {
     unpack(data: Buffer): this {
         const unpack = new PacketUnpack(data);
@@ -11,7 +10,10 @@ export class Receivable {
             const format = getFormat(this, key);
 
             var res: string | number = 0;
-            if(format.type == 'byte') {
+            if(key == 'Size') {
+                res = unpack.readUInt8() * 4;
+            }
+            else if(format.type == 'byte') {
                 res = unpack.readUInt8();
             }
             else if(format.type == 'word') {
