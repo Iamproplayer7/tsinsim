@@ -87,13 +87,12 @@ export class InSim extends Events {
         const packetType = PacketType[packetId];
         if(!packetType) {
             return;
-            //return console.log('[InSim:deserializePacket] packetType with packetId: ' + packetId + ' unknown!');
+            return console.log('[InSim:deserializePacket] packetType with packetId: ' + packetId + ' unknown!');
         }
 
         const packetClass = Packets.get(packetType);
         if(!packetClass) {
-            return;
-            //return console.log('[InSim:deserializePacket] packetClass for packetType: ' + packetType + ' ID: ' + packetId + ' unknown!');
+            return console.log('[InSim:deserializePacket] packetClass for packetType: ' + packetType + ' ID: ' + packetId + ' unknown!');
         }
 
         console.log('<- Received', packetType);
