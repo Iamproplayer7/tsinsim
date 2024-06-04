@@ -23,13 +23,15 @@ export class InSim extends Events {
         this.stream.on('connect', () => {
             this.sendPacket(new IS_ISI({ ...this.InSimOptions, ReqI: 1 }));
 
-            for (const value of [6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27]) {
+            for(const value of [6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27]) {
                 this.sendPacket(new IS_TINY({ ReqI: 1, SubT: value }));
             }
 
             this.on(PacketType.ISP_TINY, () => {
                 this.sendPacket(new IS_TINY({ ReqI: 1 }));
             });
+
+            this.fire('connect');
         });
 
         this.stream.on('data', (data: Buffer) => {
@@ -67,6 +69,8 @@ export class InSim extends Events {
             this.stream.end();
             this.stream = null;
         }
+
+        this.fire('disconnect', this);
     }
 
     sendPacket(packet: Sendable) {
@@ -82,14 +86,17 @@ export class InSim extends Events {
         const packetId = data.readUInt8(1);
         const packetType = PacketType[packetId];
         if(!packetType) {
-            return console.log('[InSim:deserializePacket] packetType with packetId: ' + packetId + ' unknown!');
+            return;
+            //return console.log('[InSim:deserializePacket] packetType with packetId: ' + packetId + ' unknown!');
         }
 
         const packetClass = Packets.get(packetType);
         if(!packetClass) {
-            return console.log('[InSim:deserializePacket] packetClass for packetType: ' + packetType + ' ID: ' + packetId + ' unknown!');
+            return;
+            //return console.log('[InSim:deserializePacket] packetClass for packetType: ' + packetType + ' ID: ' + packetId + ' unknown!');
         }
 
         console.log('<- Received', packetType);
+        this.fire(packetId, (new packetClass).unpack(data));
     }
 }
