@@ -86,7 +86,6 @@ export class InSim extends Events {
         const packetId = data.readUInt8(1);
         const packetType = PacketType[packetId];
         if(!packetType) {
-            return;
             return console.log('[InSim:deserializePacket] packetType with packetId: ' + packetId + ' unknown!');
         }
 
