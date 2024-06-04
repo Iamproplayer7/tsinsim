@@ -1,0 +1,10 @@
+export enum ButtonTextColor {
+    COLOR_LIGHT_GREY,
+    COLOR_YELLOW,
+    COLOR_BLACK,
+    COLOR_WHITE,
+    COLOR_GREEN,
+    COLOR_RED,
+    COLOR_PALE_BLUE,
+    COLOR_GREY
+}

@@ -1,0 +1,8 @@
+export enum MessageSound {
+	SND_SILENT,
+	SND_MESSAGE,
+	SND_SYSMESSAGE,
+	SND_INVALIDKEY,
+	SND_ERROR,
+	SND_NUM
+};

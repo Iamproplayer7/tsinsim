@@ -1,0 +1,6 @@
+export enum HLVCViolation {
+    VIOLATION_GROUND,
+    VIOLATION_WALL,
+    VIOLATION_SPEEDING = 4,
+    VIOLATION_OUT_OF_BOUNDS = 5
+}

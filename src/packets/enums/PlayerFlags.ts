@@ -1,0 +1,16 @@
+export enum PlayerFlags {
+    PIF_LEFTSIDE		= 1,
+    PIF_RESERVED_2		= 2,
+    PIF_RESERVED_4		= 4,
+    PIF_AUTOGEARS		= 8,
+    PIF_SHIFTER			= 16,
+    PIF_RESERVED_32		= 32,
+    PIF_HELP_B			= 64,
+    PIF_AXIS_CLUTCH		= 128,
+    PIF_INPITS			= 256,
+    PIF_AUTOCLUTCH		= 512,
+    PIF_MOUSE			= 1024,
+    PIF_KB_NO_HELP		= 2048,
+    PIF_KB_STABILISED	= 4096,
+    PIF_CUSTOM_VIEW		= 8192
+}
