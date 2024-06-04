@@ -1,3 +1,15 @@
 export { IS_ISI } from './IS_ISI.js';
 export { IS_VER } from './IS_VER.js';
 export { IS_TINY } from './IS_TINY.js';
+export { IS_STA } from './IS_STA.js';
+export { IS_SMALL } from './IS_SMALL.js';
+export { IS_ISM } from './IS_ISM.js';
+export { IS_NCN } from './IS_NCN.js';
+export { IS_ACR } from './IS_ACR.js';
+export { IS_AXM } from './IS_AXM.js';
+export { IS_REO } from './IS_REO.js';
+export { IS_RST } from './IS_RST.js';
+export { IS_AXI } from './IS_AXI.js';
+export { IS_RIP } from './IS_RIP.js';
+export { IS_NCI } from './IS_NCI.js';
+export { IS_MAL } from './IS_MAL.js';

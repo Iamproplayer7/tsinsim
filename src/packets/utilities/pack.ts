@@ -1,14 +1,16 @@
-export const PacketPack = (values: string[] | number[], types: { type: string, length?: number }[]): Uint8Array => {
+export const PacketPack = (values: string[] | number[], types: { type: string, length?: number }[], newSize?: number): Uint8Array => {
     const buffer: Buffer = Buffer.alloc(values[0] as number * 4);
 
     var offset: number = 0;
     values.forEach((value, key) => {
+        if(!types[key]) return;
+        
         const type = types[key].type;
         const length = types[key].length ?? 0;
 
         if(typeof value == 'number') {
             if(type == 'byte') {
-                buffer.writeUInt8(value, offset);
+                buffer.writeUInt8(newSize && key == 0 ? newSize/4 : value, offset);
                 offset += 1;
             }
             else if(type == 'word') {

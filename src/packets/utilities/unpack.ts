@@ -5,6 +5,8 @@ export const PacketUnpack = (buffer: Buffer, keys: string[], types: { type: stri
 
     var offset: number = 0;
     keys.forEach((value, key) => {
+        if(!types[key]) return;
+
         const type = types[key].type;
         const length = types[key].length ?? 0;
 
