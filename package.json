@@ -1,4 +1,5 @@
 {
+	"type": "module",
 	"name": "tsinsim",
 	"version": "1.0.0",
 	"description": "An InSim library for Node.js (JavaScript runtime environment) with TypeScript support.",
@@ -29,9 +30,13 @@
 	},
 	"homepage": "https://github.com/Iamproplayer7/tsinsim#readme",
 	"devDependencies": {
+		"@types/node": "^20.14.0",
 		"typescript": "^5.4.5"
 	},
 	"dependencies": {
-		"tsx": "^4.11.2"
+		"parse-lfs-message": "^1.2.4",
+		"reflect-metadata": "^0.2.2",
+		"tsx": "^4.11.2",
+		"unicode-to-lfs": "^2.0.0"
 	}
 }
