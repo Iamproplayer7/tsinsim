@@ -1,25 +1,46 @@
 import parseLFSMessage from 'parse-lfs-message';
 
-export class PacketUnpack {
-    offset: number = 0;
+export const PacketUnpack = (buffer: Buffer, keys: string[], types: { type: string, length?: number }[]): { [key: string]: string | number } => {
+    const data: { [key: string]: string | number } = {};
 
-    constructor(public buffer: Buffer) {}
+    var offset: number = 0;
+    keys.forEach((value, key) => {
+        const type = types[key].type;
+        const length = types[key].length ?? 0;
 
-    readUInt8(): number {
-        const ret = this.buffer.readUInt8(this.offset);
-        this.offset += 1;
-        return ret;
-    }
+        if(type != 'char') {
+            if(type == 'byte') {
+                data[value] = buffer.readUInt8(offset);
+                offset += 1;
+            }
+            else if(type == 'word') {
+                data[value] = buffer.readUInt16LE(offset);
+                offset += 2;
+            }
+            else if(type == 'short') {
+                data[value] = buffer.readInt16LE(offset);
+                offset += 2;
+            }
+            else if(type == 'int') {
+                buffer.readInt32LE(offset);
+                offset += 4;
+            }
+            else if(type == 'unsigned') {
+                data[value] = buffer.readUInt32LE(offset);
+                offset += 4;
+            }
+            else if(type == 'float') {
+                data[value] = buffer.readFloatLE(offset);
+                offset += 4;
+            }
+        }
+        else {
+            if(type == 'char') {
+                data[value] = parseLFSMessage(buffer.subarray(offset, offset + length));
+                offset += length;
+            }
+        }
+    })
 
-    readUInt16(): number {
-        const ret = this.buffer.readUInt16LE(this.offset);
-        this.offset += 2;
-        return ret;
-    }
-
-    readChar(length: number = 0): string {
-        const ret = parseLFSMessage(this.buffer.subarray(this.offset, this.offset + length));
-        this.offset += length;
-        return ret;
-    }
+    return data;
 }

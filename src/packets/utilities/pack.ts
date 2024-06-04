@@ -1,28 +1,50 @@
-export class PacketPack {
-    buffer!: Buffer;
-    offset: number = 0;
+export const PacketPack = (values: string[] | number[], types: { type: string, length?: number }[]): Uint8Array => {
+    const buffer: Buffer = Buffer.alloc(values[0] as number * 4);
 
-    constructor(length: number) {
-        this.buffer = Buffer.alloc(length);
-    }
+    var offset: number = 0;
+    values.forEach((value, key) => {
+        const type = types[key].type;
+        const length = types[key].length ?? 0;
 
-    writeUInt8(value: number): void {
-        this.buffer.writeUInt8(value, this.offset);
-        this.offset += 1;
-    }
-
-    writeUInt16(value: number): void {
-        this.buffer.writeUInt16LE(value, this.offset);
-        this.offset += 2;
-    }
-
-    writeChar(text: string, length: number = 0) {
-        text = text.slice(0, length);
-        
-        for(var i = 0; i < text.length; i++) {
-            this.writeUInt8(text.charCodeAt(i));
+        if(typeof value == 'number') {
+            if(type == 'byte') {
+                buffer.writeUInt8(value, offset);
+                offset += 1;
+            }
+            else if(type == 'word') {
+                buffer.writeUInt16LE(value, offset);
+                offset += 2;
+            }
+            else if(type == 'short') {
+                buffer.writeInt16LE(value, offset);
+                offset += 2;
+            }
+            else if(type == 'int') {
+                buffer.writeInt32LE(value, offset);
+                offset += 4;
+            }
+            else if(type == 'unsigned') {
+                buffer.writeUInt32LE(value, offset);
+                offset += 4;
+            }
+            else if(type == 'float') {
+                buffer.writeFloatLE(value, offset);
+                offset += 4;
+            }
         }
+        else {
+            if(type == 'char') {
+                value = value.slice(0, length);
+        
+                for(var i = 0; i < value.length; i++) {
+                    buffer.writeUInt8(value.charCodeAt(i), offset);
+                    offset += 1;
+                }
 
-        this.offset += length - text.length;
-    }
+                offset += length - value.length;
+            }
+        }
+    })
+
+    return buffer;
 }
