@@ -1,10 +1,30 @@
 import { getFormat } from "packets/structs/decorators.js";
-import { PacketPack } from './pack.js';
-import { PacketType } from "packets/types/Packet.js";
+import { PacketPack } from "./pack.js";
+import { PacketUnpack } from "./unpack.js";
+import { PacketType } from "packets/types/index.js";
 
 
 export class Receivable {
-    unpack(data: Uint8Array): this {
+    unpack(data: Buffer): this {
+        const unpack = new PacketUnpack(data);
+        for(const key of Object.getOwnPropertyNames(this)) {
+            const format = getFormat(this, key);
+
+            var res: string | number = 0;
+            if(format.type == 'byte') {
+                res = unpack.readUInt8();
+            }
+            else if(format.type == 'word') {
+                res = unpack.readUInt16();
+            }
+            else if(format.type == 'char') {
+                res = unpack.readChar(format.length)
+            }
+
+            // something bad as f here: dont look :(
+            Object.assign(this, { [key]: res });
+        }
+
         return this;
     }
 }
