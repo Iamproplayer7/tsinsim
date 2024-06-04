@@ -1,3 +1,4 @@
+import { Receivable, Sendable } from "packets/utilities/index.js";
 import "reflect-metadata";
 
 const key = Symbol("format");
@@ -20,9 +21,9 @@ export const getFormat = (target: any, propertyKey: string) => {
 
 
 class PacketHandler {
-    all: { [name: string]: Function } = {};
+    all: { [name: string]: new() => Sendable | Receivable } = {};
 
-    set(constructor: Function) {
+    set(constructor: new() => Sendable | Receivable) {
         var name = constructor.name;
         const nameArr = name.split('_');
         nameArr[0] += 'P';
@@ -31,13 +32,13 @@ class PacketHandler {
         this.all[name] = constructor;
     }
 
-    get(name: string): Function {
+    get(name: string) {
         return this.all[name];
     }
 }
 
 export const Packets = new PacketHandler;
 
-export const define = (constructor: Function) => {
+export const define = (constructor: new() => Sendable | Receivable) => {
     Packets.set(constructor);
 }
