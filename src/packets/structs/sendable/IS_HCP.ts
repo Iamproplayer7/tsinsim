@@ -5,7 +5,7 @@ import { CarHCP } from "../../structs/CarHCP.js";
 
 @define
 export class IS_HCP extends Sendable {
-    constructor(options?: {}) { 
+    constructor(options: Partial<IS_HCP> = {}) { 
         super(); 
         Object.assign(this, options);
     }

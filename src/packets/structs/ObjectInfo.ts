@@ -4,7 +4,7 @@ import { ObjectIndex } from "../enums/ObjectIndex.js";
 
 @define
 export class ObjectInfo extends Struct {
-    constructor(options?: {}) { 
+    constructor(options: Partial<ObjectInfo> = {}) { 
         super(); 
         Object.assign(this, options);
     }

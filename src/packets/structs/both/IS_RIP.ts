@@ -5,7 +5,7 @@ import { PacketType } from "../../types/PacketType.js";
 
 @define
 export class IS_RIP extends Sendable {
-    constructor(options?: {}) { 
+    constructor(options: Partial<IS_RIP> = {}) { 
         super(); 
         Object.assign(this, options);
     }

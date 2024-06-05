@@ -5,7 +5,7 @@ import { ScreenshotError } from "../../enums/ScreenshotError.js";
 
 @define
 export class IS_SSH extends Sendable {
-    constructor(options?: {}) { 
+    constructor(options: Partial<IS_SSH> = {}) { 
         super(); 
         Object.assign(this, options);
     }

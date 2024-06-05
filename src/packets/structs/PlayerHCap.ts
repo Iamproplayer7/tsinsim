@@ -4,7 +4,7 @@ import { PlayerHCapFlags } from "../enums/index.js";
 
 @define
 export class PlayerHCap extends Struct {
-    constructor(options?: {}) { 
+    constructor(options: Partial<PlayerHCap> = {}) { 
         super(); 
         Object.assign(this, options);
     }

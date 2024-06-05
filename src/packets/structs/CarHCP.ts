@@ -3,7 +3,7 @@ import { define, byte } from "../utilities/decorators.js";
 
 @define
 export class CarHCP extends Struct {
-    constructor(options?: {}) { 
+    constructor(options: Partial<CarHCP> = {}) { 
         super(); 
         Object.assign(this, options);
     }

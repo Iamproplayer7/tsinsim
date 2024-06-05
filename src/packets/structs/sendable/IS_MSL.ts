@@ -5,7 +5,7 @@ import { MessageSound } from "../../enums/MessageSound.js";
 
 @define
 export class IS_MSL extends Sendable {
-    constructor(options?: {}) { 
+    constructor(options: Partial<IS_MSL> = {}) { 
         super(); 
         Object.assign(this, options);
     }

@@ -5,7 +5,7 @@ import { CarFlags } from "../../enums/CarFlags.js";
 
 @define
 export class IS_PLC extends Sendable {
-    constructor(options?: {}) { 
+    constructor(options: Partial<IS_BTN> = {}) { 
         super(); 
         Object.assign(this, options);
     }
