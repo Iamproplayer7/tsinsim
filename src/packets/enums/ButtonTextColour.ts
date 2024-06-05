@@ -1,4 +1,4 @@
-export enum ButtonTextColor {
+export enum ButtonTextColour {
     COLOR_LIGHT_GREY,
     COLOR_YELLOW,
     COLOR_BLACK,
