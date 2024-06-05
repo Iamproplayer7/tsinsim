@@ -1,9 +1,14 @@
-import { Sendable, Struct } from "packets/utilities/index.js";
+import { Struct } from "packets/utilities/index.js";
 import { define, byte, short } from "./decorators.js";
 import { ObjectIndex } from "packets/enums/ObjectIndex.js";
 
 @define
 export class ObjectInfo extends Struct {
+    constructor(options?: {}) { 
+        super(); 
+        Object.assign(this, options);
+    }
+    
     @short() X = 0;
     @short() Y = 0;
 
