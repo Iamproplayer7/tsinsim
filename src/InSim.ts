@@ -22,7 +22,7 @@ export class InSim extends Events {
     connect(connectionOptions: InSimConnectionOptions): void {
         this.stream = net.connect(connectionOptions.Port, connectionOptions.Host);
         this.stream.on('connect', () => {
-            this.sendPacket(new IS_ISI({ ...this.InSimOptions, ReqI: 1 }));
+            this.sendPacket(new IS_ISI({ ...this.InSimOptions }));
 
             for(const value of [6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27]) {
                 this.sendPacket(new IS_TINY({ ReqI: 1, SubT: value }));
