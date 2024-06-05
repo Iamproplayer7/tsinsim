@@ -10,7 +10,7 @@ export class IS_MTC extends Sendable {
         Object.assign(this, options);
     }
 
-    @byte() readonly Size = 136;
+    @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_MTC;
     @byte() readonly ReqI = 0;
     @byte() Sound: MessageSound = 0;
@@ -20,5 +20,13 @@ export class IS_MTC extends Sendable {
     @byte() private readonly Sp2 = 0;
     @byte() private readonly Sp3 = 0;
 
-    @char(128) Text = '';
+    @char(0) Text = '';
+
+    pack(): Uint8Array { 
+        const buf = Buffer.from(this.Text).subarray(0, 127);
+        const textLength = buf.length + 1;
+        const len: number = textLength % 4 != 0 ? textLength + 4 - (textLength % 4) : textLength;
+
+        return Buffer.concat([super.pack(this.Size + len), buf, Buffer.alloc(len-buf.length)]);
+    }
 }
