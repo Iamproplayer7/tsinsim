@@ -114,7 +114,7 @@ insim.on(PacketType.ISP_NCN, (data) => {
     */
 
     // send message to the new player (shorter method)
-    insim.sendPacket(new IS_MTC({ UCID: data.UCID, Text: 'Welcome to the server a little adventurer! Use: !help' }));
+    insim.sendPacket(new IS_MTC({ UCID: data.UCID, Text: '^7Welcome to the server a little adventurer! Use: !help' }));
 });
 
 

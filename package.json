@@ -1,28 +1,28 @@
 {
 	"type": "module",
 	"name": "tsinsim",
-	"version": "1.0.9",
+	"version": "1.0.0",
 	"description": "An InSim library for Node.js (JavaScript runtime environment) with TypeScript support.",
 	"main": "./dist/index.js",
-	"types": "./dist/types/index.d.ts",
+	"types": "./dist/types/src/index.d.ts",
 	"exports": {
 		".": {
-		  	"types": "./dist/types/index.d.ts",
-		  	"default": "./dist/src/index.js"
+			"types": "./dist/types/src/index.d.ts",
+			"default": "./dist/src/index.js"
 		},
 		"./packets": {
-		  	"types": "./dist/types/packets/index.d.ts",
-		  	"default": "./dist/src/packets/structs/index.js"
+			"types": "./dist/types/src/packets/index.d.ts",
+			"default": "./dist/src/packets/structs/index.js"
 		},
 		"./enums": {
-			"types": "./dist/types/enums/index.d.ts",
+			"types": "./dist/types/src/enums/index.d.ts",
 			"default": "./dist/src/packets/enums/index.js"
 		},
 		"./package.json": "./package.json"
 	},
 	"files": [
 		"dist"
-	  ],
+	],
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsx watch ./src/index.ts",
@@ -34,6 +34,7 @@
 	},
 	"keywords": [
 		"lfs",
+		"live for speed",
 		"live",
 		"for",
 		"speed",
@@ -41,7 +42,11 @@
 		"node",
 		"nodejs",
 		"node.js",
-		"typescript"
+		"node-js",
+		"typescript",
+		"tcp",
+		"library",
+		"simulator"
 	],
 	"author": "Vidmantas",
 	"license": "ISC",
