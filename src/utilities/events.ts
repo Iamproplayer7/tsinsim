@@ -1,6 +1,6 @@
 import { PacketType } from "packets/types/index.js";
 
-type Name = PacketType | 'connect' | 'disconnect';
+type Name = PacketType | 'connect' | 'disconnect' | 'connected';
 type Callback = (data: any) => void;
 
 export class Events {
