@@ -1,4 +1,4 @@
-export enum TyreCoumpound {
+export enum TyreCompound {
 	TYRE_R1,			// 0
 	TYRE_R2,			// 1
 	TYRE_R3,			// 2
