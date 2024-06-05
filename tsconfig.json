@@ -28,6 +28,7 @@
 		"skipLibCheck": true,
         "declaration": true,
         "emitDeclarationOnly": false,
+		"declarationDir": "./dist/types",
 
 		"baseUrl": "src",
 		"paths": {
