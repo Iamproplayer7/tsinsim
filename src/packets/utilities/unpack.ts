@@ -1,6 +1,6 @@
 import parseLFSMessage from 'parse-lfs-message';
 
-export const PacketUnpack = (buffer: Buffer, keys: string[], types: { type: string, length?: number }[]): { [key: string]: string | number } => {
+export const PacketUnpack = (buffer: Buffer, keys: string[], types: { type: string, length: number }[]): { [key: string]: string | number } => {
     const data: { [key: string]: string | number } = {};
 
     var offset: number = 0;

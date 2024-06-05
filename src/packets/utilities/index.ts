@@ -6,7 +6,7 @@ import { PacketType } from "packets/types/PacketType.js";
 export class Receivable {
     unpack(data: Buffer): this {
         const keys: string[] = Object.getOwnPropertyNames(this);
-        const types: { type: string, length?: number }[] = keys.map((k) => getFormat(this, k));
+        const types: { type: string, length: number }[] = keys.map((k) => getFormat(this, k));
 
         // something bad as f here: dont be like me do better :(
         Object.assign(this, { ...PacketUnpack(data, keys, types) });

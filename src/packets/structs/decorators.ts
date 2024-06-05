@@ -9,32 +9,32 @@ export const char = (length: number) => {
 
 /* 1-byte unsigned integer */
 export const byte = () => {
-    return Reflect.metadata(key, { type: 'byte' });
+    return Reflect.metadata(key, { type: 'byte', length: 1 });
 }
 
 /* 2-byte unsigned integer */
 export const word = () => {
-    return Reflect.metadata(key, { type: 'word' });
+    return Reflect.metadata(key, { type: 'word', length: 2 });
 }
 
 /* 2-byte signed integer */
 export const short = () => {
-    return Reflect.metadata(key, { type: 'short' });
+    return Reflect.metadata(key, { type: 'short', length: 2 });
 }
 
 /* 4-byte unsigned integer */
 export const unsigned = () => {
-    return Reflect.metadata(key, { type: 'unsigned' });
+    return Reflect.metadata(key, { type: 'unsigned', length: 4 });
 }
 
 /* 4-byte signed integer */
 export const int = () => {
-    return Reflect.metadata(key, { type: 'int' });
+    return Reflect.metadata(key, { type: 'int', length: 4 });
 }
 
 /* 4-byte float */
 export const float = () => {
-    return Reflect.metadata(key, { type: 'float' });
+    return Reflect.metadata(key, { type: 'float', length: 4 });
 }
 
 export const getFormat = (target: any, propertyKey: string) => {
@@ -45,12 +45,7 @@ class PacketHandler {
     all: { [name: string]: new() => Sendable | Receivable } = {};
 
     set(constructor: new() => Sendable | Receivable) {
-        var name = constructor.name;
-        const nameArr = name.split('_');
-        nameArr[0] += 'P';
-        name = nameArr.join('_');
-
-        this.all[name] = constructor;
+        this.all[constructor.name.replace('IS_', 'ISP_')] = constructor;
     }
 
     get(name: string) {

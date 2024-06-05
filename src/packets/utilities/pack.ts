@@ -1,5 +1,5 @@
 export const PacketPack = (values: string[] | number[], types: { type: string, length: number }[], newSize: number = 0): Uint8Array => {
-    const sizeExperimental = types.map((type) => (type.type == 'byte' ? 1 : (type.type == 'word' || type.type == 'short' ? 2 : (type.type == 'int' || type.type == 'unsigned' || type.type == 'float' ? 4 : (type.type == 'char' ? type.length : 0))))).reduce((sum, current) => sum + current, 0);
+    const sizeExperimental = types.map((type) => type.length).reduce((sum, current) => sum + current, 0);
 
     const buffer: Buffer = Buffer.alloc(sizeExperimental);
 
@@ -8,7 +8,7 @@ export const PacketPack = (values: string[] | number[], types: { type: string, l
         if(!types[key]) return;
         
         const type = types[key].type;
-        const length = types[key].length ?? 0;
+        const length = types[key].length;
 
         if(typeof value == 'number') {
             if(type == 'byte') {
