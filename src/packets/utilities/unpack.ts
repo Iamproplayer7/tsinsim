@@ -1,43 +1,41 @@
 import parseLFSMessage from 'parse-lfs-message';
 
-export const PacketUnpack = (buffer: Buffer, keys: string[], types: { type: string, length: number }[]): { [key: string]: string | number } => {
+export const PacketUnpack = (vk: { [key: string]: { value: string, type: string, length: number } }, buffer: Buffer): { [key: string]: string | number } => {
     const data: { [key: string]: string | number } = {};
 
     var offset: number = 0;
-    keys.forEach((value, key) => {
-        if(!types[key]) return;
-
-        const type = types[key].type;
-        const length = types[key].length;
+    for(const key of Object.keys(vk)) {
+        const type = vk[key].type;
+        const length = vk[key].length;
 
         if(type != 'char') {
             if(type == 'byte') {
-                data[value] = buffer.readUInt8(offset);
+                data[key] = buffer.readUInt8(offset);
             }
             else if(type == 'word') {
-                data[value] = buffer.readUInt16LE(offset);
+                data[key] = buffer.readUInt16LE(offset);
             }
             else if(type == 'short') {
-                data[value] = buffer.readInt16LE(offset);
+                data[key] = buffer.readInt16LE(offset);
             }
             else if(type == 'int') {
-                data[value] = buffer.readInt32LE(offset);
+                data[key] = buffer.readInt32LE(offset);
             }
             else if(type == 'unsigned') {
-                data[value] = buffer.readUInt32LE(offset);
+                data[key] = buffer.readUInt32LE(offset);
             }
             else if(type == 'float') {
-                data[value] = buffer.readFloatLE(offset);
+                data[key] = buffer.readFloatLE(offset);
             }
         }
         else {
             if(type == 'char') {
-                data[value] = parseLFSMessage(buffer.subarray(offset, offset + length));
+                data[key] = parseLFSMessage(buffer.subarray(offset, offset + length));
             }
         }
 
         offset += length;
-    })
+    }
 
     return data;
 }

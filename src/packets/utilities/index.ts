@@ -6,10 +6,13 @@ import { PacketType } from "../types/PacketType.js";
 export class Receivable {
     unpack(data: Buffer): this {
         const keys: string[] = Object.getOwnPropertyNames(this);
-        const types: { type: string, length: number }[] = keys.map((k) => getFormat(this, k));
+        const vk: { [key: string]: { value: string, type: string, length: number } } = {};
+        for(const key of keys) {
+            vk[key] = getFormat(this, key) || { type: '', length: 0 };
+        };
 
         // something bad as f here: dont be like me do better :(
-        Object.assign(this, { ...PacketUnpack(data, keys, types) });
+        Object.assign(this, { ...PacketUnpack(vk, data) });
 
         return this;
     }
@@ -18,13 +21,13 @@ export class Receivable {
 export class Struct extends Receivable {
     pack(newSize: number = 0): Uint8Array {
         const keys = Object.getOwnPropertyNames(this);
-        const values: string[] = keys.map((k) => {
-            const value = Object.getOwnPropertyDescriptor(this, k)?.value; 
-            return k == 'Size' ? value/4 : value;  
-        });
-        const types: { type: string, length: number }[] = keys.map((k) => getFormat(this, k)).filter((type) => type != undefined);
-        
-        return PacketPack(values, types, newSize);
+        const vk: { [key: string]: { value: string, type: string, length: number } } = {};
+        for(const key of keys) {
+            const value = Object.getOwnPropertyDescriptor(this, key)?.value; 
+            vk[key] = { value: (key == 'Size' ? value/4 : value), ...getFormat(this, key)  || { type: '', length: 0 } };
+        }
+
+        return PacketPack(vk, newSize);
     }
 }
 

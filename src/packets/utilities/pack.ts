@@ -1,17 +1,16 @@
-export const PacketPack = (values: string[], types: { type: string, length: number }[], newSize: number = 0): Uint8Array => {
-    const sizeExperimental = types.map((type) => type.length).reduce((sum, current) => sum + current, 0);
-    const buffer: Buffer = Buffer.alloc(sizeExperimental);
+export const PacketPack = (vk: { [key: string]: { value: string, type: string, length: number } }, newSize: number = 0): Uint8Array => {
+    const bufferLength = Object.values(vk).map((v) => v.length).reduce((sum, current) => sum + current, 0);
+    const buffer: Buffer = Buffer.alloc(bufferLength);
 
     var offset: number = 0;
-    values.forEach((value, key) => {
-        if(!types[key]) return;
+    for(const key of Object.keys(vk)) {
+        var value = vk[key].value;
+        const type = vk[key].type;
+        const length = vk[key].length;
         
-        const type = types[key].type;
-        const length = types[key].length;
-
         if(typeof value == 'number') {
             if(type == 'byte') {
-                buffer.writeUInt8(newSize && key == 0 ? newSize/4 : value, offset);
+                buffer.writeUInt8((newSize && key == 'Size' ? newSize/4 : value), offset);
             }
             else if(type == 'word') {
                 buffer.writeUInt16LE(value, offset);
@@ -41,7 +40,7 @@ export const PacketPack = (values: string[], types: { type: string, length: numb
         }
 
         offset += type == 'char' ? length - value.slice(0, length).length : length;
-    })
-
+    }
+    
     return buffer;
 }
