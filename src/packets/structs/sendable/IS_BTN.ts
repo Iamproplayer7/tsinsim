@@ -1,7 +1,7 @@
 import { Sendable } from "packets/utilities/index.js";
 import { define, byte, char } from "packets/utilities/decorators.js";
 import { PacketType } from "packets/types/PacketType.js";
-import { ButtonStyle } from "packets/enums/ButtonStyle.js";
+import { ButtonStyle, ButtonTextColour } from "packets/enums/index.js";
 
 @define
 export class IS_BTN extends Sendable {
@@ -12,12 +12,12 @@ export class IS_BTN extends Sendable {
 
     @byte() readonly Size = 12;
     @byte() readonly Type = PacketType.ISP_BTN;
-    @byte() readonly ReqI = 0;
-    @byte() readonly Zero = 0;
+    @byte() ReqI = 0;
+    @byte() UCID = 0;
 
     @byte() ClickID = 0;
     @byte() Inst = 0;
-    @byte() BStyle: ButtonStyle | 0 = 0;
+    @byte() BStyle: ButtonStyle | ButtonTextColour = 0;
     @byte() TypeIn = 0;
 
     @byte() L = 0;
@@ -25,5 +25,13 @@ export class IS_BTN extends Sendable {
     @byte() W = 0;
     @byte() H = 0;
 
-    @char(240) Text = '';
+    @char(0) Text = '';
+
+    pack(): Uint8Array { 
+        const buf = Buffer.from(this.Text).subarray(0, 239);
+        const textLength = buf.length + 1;
+        const len: number = textLength % 4 != 0 ? textLength + 4 - (textLength % 4) : textLength;
+
+        return Buffer.concat([super.pack(this.Size + len), buf, Buffer.alloc(len-buf.length)]);
+    }
 }
