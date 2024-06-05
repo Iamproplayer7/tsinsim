@@ -1,3 +1,4 @@
+import unicodeToLfs from "unicode-to-lfs";
 import { Sendable } from "../../utilities/index.js";
 import { define, byte, char } from "../../utilities/decorators.js";
 import { PacketType } from "../../types/PacketType.js";
@@ -22,7 +23,8 @@ export class IS_MTC extends Sendable {
 
     @char(0) Text = '';
 
-    pack(): Uint8Array { 
+    pack(): Uint8Array {
+        this.Text = unicodeToLfs(this.Text);
         const buf = Buffer.from(this.Text).subarray(0, 127);
         const textLength = buf.length + 1;
         const len: number = textLength % 4 != 0 ? textLength + 4 - (textLength % 4) : textLength;
