@@ -1,3 +1,5 @@
+export { PacketType } from '../types/PacketType.js';
+
 /* * RECEIVABLE PACKETS */
 export { IS_VER } from './receivable/IS_VER.js';
 export { IS_STA } from './receivable/IS_STA.js';
