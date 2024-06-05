@@ -27,7 +27,7 @@ export * from './InterfaceIdentifier.js';
 export * from './ObjectIndex.js';
 export * from './PMOAction.js';
 export * from './PMOFlags.js';
-export * from './ButtonStyles.js';
+export * from './ButtonStyle.js';
 export * from './ButtonTextColour.js';
 export * from './ButtonClickFlags.js';
 export * from './ButtonFunction.js';
