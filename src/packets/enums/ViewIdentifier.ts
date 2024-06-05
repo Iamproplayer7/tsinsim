@@ -4,5 +4,5 @@ export enum ViewIdentifier {
 	VIEW_CAM,		// 2 - tv camera
 	VIEW_DRIVER,	// 3 - cockpit
 	VIEW_CUSTOM,	// 4 - custom
-	VIEW_MAX
+	VIEW_MAX 	= 255
 };
