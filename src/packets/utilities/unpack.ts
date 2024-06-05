@@ -8,40 +8,35 @@ export const PacketUnpack = (buffer: Buffer, keys: string[], types: { type: stri
         if(!types[key]) return;
 
         const type = types[key].type;
-        const length = types[key].length ?? 0;
+        const length = types[key].length;
 
         if(type != 'char') {
             if(type == 'byte') {
                 data[value] = buffer.readUInt8(offset);
-                offset += 1;
             }
             else if(type == 'word') {
                 data[value] = buffer.readUInt16LE(offset);
-                offset += 2;
             }
             else if(type == 'short') {
                 data[value] = buffer.readInt16LE(offset);
-                offset += 2;
             }
             else if(type == 'int') {
-                buffer.readInt32LE(offset);
-                offset += 4;
+                data[value] = buffer.readInt32LE(offset);
             }
             else if(type == 'unsigned') {
                 data[value] = buffer.readUInt32LE(offset);
-                offset += 4;
             }
             else if(type == 'float') {
                 data[value] = buffer.readFloatLE(offset);
-                offset += 4;
             }
         }
         else {
             if(type == 'char') {
                 data[value] = parseLFSMessage(buffer.subarray(offset, offset + length));
-                offset += length;
             }
         }
+
+        offset += length;
     })
 
     return data;

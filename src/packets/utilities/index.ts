@@ -18,7 +18,7 @@ export class Receivable {
 export class Struct extends Receivable {
     pack(newSize: number = 0): Uint8Array {
         const keys = Object.getOwnPropertyNames(this);
-        const values: string[] | number[] = keys.map((k) => {
+        const values: string[] = keys.map((k) => {
             const value = Object.getOwnPropertyDescriptor(this, k)?.value; 
             return k == 'Size' ? value/4 : value;  
         });
