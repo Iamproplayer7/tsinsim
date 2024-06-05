@@ -1,5 +1,5 @@
 import { Struct } from "packets/utilities/index.js";
-import { define, byte, short } from "./decorators.js";
+import { define, byte, short } from "../utilities/decorators.js";
 import { ObjectIndex } from "packets/enums/ObjectIndex.js";
 
 @define

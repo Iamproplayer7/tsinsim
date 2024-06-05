@@ -1,4 +1,4 @@
-import { getFormat } from "packets/structs/decorators.js";
+import { getFormat } from "packets/utilities/decorators.js";
 import { PacketPack } from "./pack.js";
 import { PacketUnpack } from "./unpack.js";
 import { PacketType } from "packets/types/PacketType.js";

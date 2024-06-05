@@ -1,5 +1,5 @@
 import { Struct } from "packets/utilities/index.js";
-import { define, byte, short, word, int } from "./decorators.js";
+import { define, byte, short, word, int } from "../utilities/decorators.js";
 import { CompCarFlags } from "packets/enums/CompCarFlags.js";
 
 @define
