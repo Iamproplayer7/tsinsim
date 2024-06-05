@@ -1,5 +1,5 @@
 import net from 'net';
-import { Packets } from 'packets/structs/decorators.js';
+import { Packets } from "packets/utilities/decorators.js";
 import { PacketType } from 'packets/types/index.js';
 import { Sendable } from 'packets/utilities/index.js';
 import { IS_ISI, IS_TINY } from 'packets/structs/index.js';
@@ -15,6 +15,7 @@ type InSimConnectionOptions = {
 export class InSim extends Events {
     private stream: net.Socket | null = null;
     private buffer: Buffer = Buffer.from('');
+    connected: boolean = false;
 
     constructor(private InSimOptions: Partial<IS_ISI>) { super(); }
 
@@ -70,6 +71,7 @@ export class InSim extends Events {
             this.stream = null;
         }
 
+        this.connected = false;
         this.fire('disconnect', this);
     }
 
@@ -83,6 +85,11 @@ export class InSim extends Events {
     deserializePacket(data: Buffer): void {
         if(this.stream === null) return;
 
+        if(!this.connected) {
+            this.connected = true;
+            this.fire('connected');
+        }
+
         const packetId = data.readUInt8(1);
         const packetType = PacketType[packetId];
         if(!packetType) {
@@ -94,7 +101,8 @@ export class InSim extends Events {
             return console.log('[InSim:deserializePacket] packetClass for packetType: ' + packetType + ' ID: ' + packetId + ' unknown!');
         }
 
-        console.log('<- Received', packetType);
+        if(packetType !== 'ISP_MCI') console.log('<- Received', packetType);
+
         this.fire(packetId, (new packetClass).unpack(data));
     }
 }
