@@ -1,8 +1,7 @@
 import { PacketType } from "packets/types/index.js";
 
-type ReceivablePacket = { };
 type Name = PacketType | 'connect' | 'disconnect';
-type Callback = (data: ReceivablePacket) => void;
+type Callback = (data: any) => void;
 
 export class Events {
     private all: { name: Name, callback: Callback}[] = [];
@@ -11,7 +10,7 @@ export class Events {
         this.all.push({ name, callback });
     }
 
-    fire(name: Name, data: ReceivablePacket = {}) {
+    fire(name: Name, data?: any) {
         const events = this.all.filter((event) => event.name === name);
         if(events.length > 0) {
             for(const event of events) {
