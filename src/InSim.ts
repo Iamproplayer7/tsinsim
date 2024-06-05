@@ -14,7 +14,7 @@ type InSimConnectionOptions = {
 
 export class InSim extends Events {
     private stream: net.Socket | null = null;
-    private buffer: Buffer = Buffer.from('');
+    private buffer: Buffer = Buffer.alloc(0);
     connected: boolean = false;
 
     constructor(private InSimOptions: Partial<IS_ISI>) { super(); }
