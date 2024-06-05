@@ -192,6 +192,8 @@ export enum ObjectIndex {
     AXO_190,
     AXO_191,
     
+    OCO_INDEX_MAIN = 240,
+    
     /* ADDITIONAL FOR IS_CIM SELTYPE */
     MARSH_IS_CP = 252,
     MARSH_IS_AREA = 253,
