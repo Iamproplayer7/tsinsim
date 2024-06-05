@@ -56,6 +56,9 @@ insim.on('disconnect', () => {
 
 ### Receiving Packets
 ```typescript
+// lets import packet IS_MTC to send messages
+import { IS_MTC } from 'tsinsim/packets';
+
 insim.on('connected', () => {
     // SEND MESSAGE TO ALL CONNECTED PLAYERS
     const Packet = new IS_MTC();
@@ -67,7 +70,7 @@ insim.on('connected', () => {
 
 ### Sending Packets
 ```typescript
-import { PacketType } from 'tsinsim/packets';
+import { PacketType } from 'tsinsim';
 
 // version info
 insim.on(PacketType.ISP_VER, (data) => {
@@ -90,8 +93,7 @@ insim.on(PacketType.ISP_VER, (data) => {
 ### Lets do something bigger together
 ```typescript
 // you already have insim connection above lets checkout this
-// lets import our packet to send messages
-import { IS_MTC } from 'tsinsim/packets';
+// ... and you have IS_MTC imported as well
 
 // new connection
 insim.on(PacketType.ISP_NCN, (data) => {
