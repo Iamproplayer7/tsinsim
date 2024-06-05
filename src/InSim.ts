@@ -72,7 +72,7 @@ export class InSim extends Events {
         }
 
         this.connected = false;
-        this.fire('disconnect', this);
+        this.fire('disconnect');
     }
 
     sendPacket(packet: Sendable) {
