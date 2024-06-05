@@ -11,5 +11,5 @@ export enum InSimFlags {
     ISF_AXM_LOAD    =    512,	// bit  9: receive AXM when loading a layout
     ISF_AXM_EDIT    =   1024,	// bit 10: receive AXM when changing objects
     ISF_REQ_JOIN    =   2048,	// bit 11: process join requests
-    ALL_MULTIPLAYER =   4095
+    ALL_MULTIPLAYER =   4091
 }
