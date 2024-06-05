@@ -11,7 +11,7 @@ export class IS_ISI extends Sendable {
 
     @byte() readonly Size = 44;
     @byte() readonly Type = PacketType.ISP_ISI;
-    @byte() ReqI = 0;
+    @byte() readonly ReqI = 0;
     @byte() readonly Zero = 0;
 
     @word() UDPPort = 0;
