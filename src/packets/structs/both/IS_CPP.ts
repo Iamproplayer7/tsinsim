@@ -6,7 +6,7 @@ import { StateFlags } from "../../enums/StateFlags.js";
 
 @define
 export class IS_CPP extends Sendable {
-    constructor(options: Partial<IS_CPP> = {}) { 
+    constructor(options: Omit<Partial<IS_CPP>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }

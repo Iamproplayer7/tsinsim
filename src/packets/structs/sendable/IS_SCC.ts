@@ -5,7 +5,7 @@ import { ViewIdentifier } from "../../enums/ViewIdentifier.js";
 
 @define
 export class IS_SCC extends Sendable {
-    constructor(options: Partial<IS_SCC> = {}) { 
+    constructor(options: Omit<Partial<IS_SCC>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }

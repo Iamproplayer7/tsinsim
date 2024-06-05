@@ -5,7 +5,7 @@ import { PlayerHCap } from "../PlayerHCap.js";
 
 @define
 export class IS_PLH extends Sendable {
-    constructor(options: Partial<IS_PLH> = {}) { 
+    constructor(options: Omit<Partial<IS_PLH>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }

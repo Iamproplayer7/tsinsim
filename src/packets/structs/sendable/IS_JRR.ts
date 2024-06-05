@@ -6,7 +6,7 @@ import { JRRAction } from "../../enums/JRRAction.js";
 
 @define
 export class IS_JRR extends Sendable {
-    constructor(options: Partial<IS_JRR> = {}) { 
+    constructor(options: Omit<Partial<IS_JRR>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }

@@ -5,7 +5,7 @@ import { ButtonStyle, ButtonTextColour } from "../../enums/index.js";
 
 @define
 export class IS_BTN extends Sendable {
-    constructor(options: Partial<IS_BTN> = {}) { 
+    constructor(options: Omit<Partial<IS_BTN>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }

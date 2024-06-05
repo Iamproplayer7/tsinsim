@@ -6,7 +6,7 @@ import { ObjectInfo } from "../ObjectInfo.js";
 
 @define
 export class IS_AXM extends Sendable {
-    constructor(options: Partial<IS_AXM> = {}) { 
+    constructor(options: Omit<Partial<IS_AXM>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }

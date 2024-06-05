@@ -5,7 +5,7 @@ import { TTCType } from "../../enums/index.js";
 
 @define
 export class IS_TTC extends Sendable {
-    constructor(options: Partial<IS_TTC> = {}) { 
+    constructor(options: Omit<Partial<IS_TTC>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }

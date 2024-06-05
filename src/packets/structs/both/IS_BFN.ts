@@ -4,7 +4,7 @@ import { PacketType } from "../../types/PacketType.js";
 
 @define
 export class IS_BFN extends Sendable {
-    constructor(options: Partial<IS_BFN> = {}) { 
+    constructor(options: Omit<Partial<IS_BFN>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }

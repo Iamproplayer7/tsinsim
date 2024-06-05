@@ -5,7 +5,7 @@ import { SmallType } from "../../enums/SmallType.js";
 
 @define
 export class IS_SMALL extends Sendable {
-    constructor(options: Partial<IS_SMALL> = {}) { 
+    constructor(options: Omit<Partial<IS_SMALL>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }
