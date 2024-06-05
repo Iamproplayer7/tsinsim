@@ -1,5 +1,7 @@
-export const PacketPack = (values: string[] | number[], types: { type: string, length?: number }[], newSize?: number): Uint8Array => {
-    const buffer: Buffer = Buffer.alloc(values[0] as number * 4);
+export const PacketPack = (values: string[] | number[], types: { type: string, length: number }[], newSize: number = 0): Uint8Array => {
+    const sizeExperimental = types.map((type) => (type.type == 'byte' ? 1 : (type.type == 'word' || type.type == 'short' ? 2 : (type.type == 'int' || type.type == 'unsigned' || type.type == 'float' ? 4 : (type.type == 'char' ? type.length : 0))))).reduce((sum, current) => sum + current, 0);
+
+    const buffer: Buffer = Buffer.alloc(sizeExperimental);
 
     var offset: number = 0;
     values.forEach((value, key) => {
