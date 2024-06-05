@@ -5,18 +5,17 @@ export enum PacketType {
 	ISP_TINY,		//  3 - both ways		: multi purpose
 	ISP_SMALL,		//  4 - both ways		: multi purpose
 	ISP_STA,		//  5 - info			: state info
-	
-	//ISP_SCH,		//  6 - instruction		: single character
-	//ISP_SFP,		//  7 - instruction		: state flags pack
-	//ISP_SCC,		//  8 - instruction		: set car camera
-	//ISP_CPP,		//  9 - both ways		: cam pos pack
-	ISP_ISM = 10,		// 10 - info			: start multiplayer
+	ISP_SCH,		//  6 - instruction		: single character
+	ISP_SFP,		//  7 - instruction		: state flags pack
+	ISP_SCC,		//  8 - instruction		: set car camera
+	ISP_CPP,		//  9 - both ways		: cam pos pack
+	ISP_ISM,		// 10 - info			: start multiplayer
 	ISP_MSO,		// 11 - info			: message out
 	ISP_III,		// 12 - info			: hidden /i message
-	//ISP_MST,		// 13 - instruction		: type message or /command
-	ISP_MTC = 14,		// 14 - instruction		: message to a connection
-	//ISP_MOD,		// 15 - instruction		: set screen mode
-	ISP_VTN = 16,		// 16 - info			: vote notification
+	ISP_MST,		// 13 - instruction		: type message or /command
+	ISP_MTC,		// 14 - instruction		: message to a connection
+	ISP_MOD,		// 15 - instruction		: set screen mode
+	ISP_VTN,		// 16 - info			: vote notification
 	ISP_RST,		// 17 - info			: race start
 	ISP_NCN,		// 18 - info			: new connection
 	ISP_CNL,		// 19 - info			: connection left
