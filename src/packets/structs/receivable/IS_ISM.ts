@@ -1,7 +1,7 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte, char } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { SmallType, InSimHost } from "packets/enums/index.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte, char } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { SmallType, InSimHost } from "@app/packets/enums/index.js";
 
 @define
 export class IS_ISM extends Receivable {

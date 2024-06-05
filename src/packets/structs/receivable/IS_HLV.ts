@@ -1,8 +1,8 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte, word } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte, word } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
 import { CarContOBJ } from "../CarContOBJ.js";
-import { HLVCViolation } from "packets/enums/HLVCViolation.js";
+import { HLVCViolation } from "@app/packets/enums/HLVCViolation.js";
 
 @define
 export class IS_HLV extends Receivable {

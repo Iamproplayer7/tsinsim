@@ -1,4 +1,3 @@
-export { PacketType } from './PacketType.js';
 export { TinyType } from './TinyType.js';
 export { SmallType } from './SmallType.js';
 export { MessageSound } from './MessageSound.js';

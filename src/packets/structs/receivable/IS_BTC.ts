@@ -1,7 +1,7 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { ButtonClickFlags } from "packets/enums/ButtonClickFlags.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { ButtonClickFlags } from "@app/packets/enums/ButtonClickFlags.js";
 
 @define
 export class IS_BTC extends Receivable {

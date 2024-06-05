@@ -1,7 +1,7 @@
-import { Sendable } from "packets/utilities/index.js";
-import { define, byte, word } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { StateFlags } from "packets/enums/StateFlags.js";
+import { Sendable } from "@app/packets/utilities/index.js";
+import { define, byte, word } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { StateFlags } from "@app/packets/enums/StateFlags.js";
 
 @define
 export class IS_SFP extends Sendable {

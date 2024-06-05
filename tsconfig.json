@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"baseUrl": "./src",
+		//"baseUrl": "./src",
 		"typeRoots": ["node_modules/@types", "@types/node"],
 
 		"removeComments": true,
@@ -22,14 +22,19 @@
 		"moduleResolution": "NodeNext",
 		
 		"outDir": "./dist",
-		"rootDir": "./src",
+		"rootDir": "./",
 		
 		"esModuleInterop": true,
 		"skipLibCheck": true,
         "declaration": true,
-        "emitDeclarationOnly": false
+        "emitDeclarationOnly": false,
+
+		"baseUrl": "src",
+		"paths": {
+			"@app/*": ["*"],
+		}
 	},
 	"include": [
 		"src/**/*.ts"
-	]
+	],
 }

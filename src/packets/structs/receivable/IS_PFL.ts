@@ -1,7 +1,7 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte, word } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { PlayerFlags } from "packets/enums/PlayerFlags.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte, word } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { PlayerFlags } from "@app/packets/enums/PlayerFlags.js";
 
 @define
 export class IS_PFL extends Receivable {

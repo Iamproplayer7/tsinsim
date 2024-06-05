@@ -1,5 +1,5 @@
-import { Struct } from "packets/utilities/index.js";
-import { define, byte, word } from "../utilities/decorators.js";
+import { Struct } from "@app/packets/utilities/index.js";
+import { define, byte, word } from "@app/packets/utilities/decorators.js";
 
 @define
 export class NodeLap extends Struct {

@@ -1,7 +1,7 @@
-import { Sendable } from "packets/utilities/index.js";
-import { define, byte } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { CarHCP } from "../CarHCP.js";
+import { Sendable } from "@app/packets/utilities/index.js";
+import { define, byte } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { CarHCP } from "@app/../CarHCP.js";
 
 @define
 export class IS_HCP extends Sendable {

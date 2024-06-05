@@ -1,4 +1,4 @@
-import { PacketType } from "packets/types/index.js";
+import { PacketType } from "@app/packets/types/index.js";
 
 type Name = PacketType | 'connect' | 'disconnect' | 'connected';
 type Callback = (data: any) => void;
@@ -6,7 +6,7 @@ type Callback = (data: any) => void;
 export class Events {
     private all: { name: Name, callback: Callback}[] = [];
 
-    async on(name: Name, callback: Callback) {
+    on(name: Name, callback: Callback) {
         this.all.push({ name, callback });
     }
 

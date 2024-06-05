@@ -1,4 +1,4 @@
-import { Receivable, Sendable } from "packets/utilities/index.js";
+import { Receivable, Sendable } from "@app/packets/utilities/index.js";
 import "reflect-metadata";
 
 const key = Symbol("format");

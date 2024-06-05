@@ -1,7 +1,7 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { FlagType } from "packets/enums/FlagType.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { FlagType } from "@app/packets/enums/FlagType.js";
 
 @define
 export class IS_FLG extends Receivable {

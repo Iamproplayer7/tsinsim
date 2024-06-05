@@ -1,7 +1,7 @@
-import { Sendable } from "packets/utilities/index.js";
-import { define, byte, unsigned } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { SmallType } from "packets/enums/SmallType.js";
+import { Sendable } from "@app/packets/utilities/index.js";
+import { define, byte, unsigned } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { SmallType } from "@app/packets/enums/SmallType.js";
 
 @define
 export class IS_SMALL extends Sendable {

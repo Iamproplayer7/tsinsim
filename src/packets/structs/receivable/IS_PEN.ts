@@ -1,7 +1,7 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { PenaltyValue, PenaltyReason } from "packets/enums/index.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { PenaltyValue, PenaltyReason } from "@app/packets/enums/index.js";
 
 @define
 export class IS_PEN extends Receivable {

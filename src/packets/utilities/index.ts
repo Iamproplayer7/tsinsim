@@ -1,7 +1,7 @@
-import { getFormat } from "packets/utilities/decorators.js";
-import { PacketPack } from "./pack.js";
-import { PacketUnpack } from "./unpack.js";
-import { PacketType } from "packets/types/PacketType.js";
+import { getFormat } from "@app/packets/utilities/decorators.js";
+import { PacketPack } from "@app/packets/utilities/pack.js";
+import { PacketUnpack } from "@app/packets/utilities/unpack.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
 
 export class Receivable {
     unpack(data: Buffer): this {

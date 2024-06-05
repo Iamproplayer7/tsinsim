@@ -6,7 +6,8 @@
 	"main": "./dist/index.js",
 	"scripts": {
 		"build": "tsc",
-		"dev": "tsx watch ./src/index.ts"
+		"dev": "tsx watch ./src/index.ts",
+		"test": "tsx watch ./test.ts"
 	},
 	"repository": {
 		"type": "git",

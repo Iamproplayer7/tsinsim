@@ -1,8 +1,8 @@
-import { Sendable } from "packets/utilities/index.js";
-import { define, byte } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
+import { Sendable } from "@app/packets/utilities/index.js";
+import { define, byte } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
 import { ObjectInfo } from "../ObjectInfo.js";
-import { JRRAction } from "packets/enums/JRRAction.js";
+import { JRRAction } from "@app/packets/enums/JRRAction.js";
 
 @define
 export class IS_JRR extends Sendable {

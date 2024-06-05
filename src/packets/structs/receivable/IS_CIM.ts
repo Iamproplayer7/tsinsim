@@ -1,7 +1,7 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { GarageInterfaceSubMode, InterfaceMode, NormalInterfaceSubMode, ShiftUInterfaceSubMode, ObjectIndex } from "packets/enums/index.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { GarageInterfaceSubMode, InterfaceMode, NormalInterfaceSubMode, ShiftUInterfaceSubMode, ObjectIndex } from "@app/packets/enums/index.js";
 
 @define
 export class IS_CIM extends Receivable {

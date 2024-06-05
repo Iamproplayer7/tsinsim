@@ -1,7 +1,7 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte, unsigned } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
-import { PenaltyValue } from "packets/enums/index.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte, unsigned } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
+import { PenaltyValue } from "@app/packets/enums/index.js";
 
 @define
 export class IS_SPX extends Receivable {

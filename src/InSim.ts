@@ -1,9 +1,9 @@
 import net from 'net';
-import { Packets } from "packets/utilities/decorators.js";
-import { PacketType } from 'packets/types/index.js';
-import { Sendable } from 'packets/utilities/index.js';
-import { IS_ISI, IS_TINY } from 'packets/structs/index.js';
-import { Events } from 'utilities/events.js';
+import { Packets } from "@app/packets/utilities/decorators.js";
+import { PacketType } from '@app/packets/types/index.js';
+import { Sendable } from '@app/packets/utilities/index.js';
+import { IS_ISI, IS_TINY } from '@app/packets/structs/index.js';
+import { Events } from '@app/utilities/events.js';
 
 // types
 type InSimConnectionOptions = {

@@ -1,6 +1,6 @@
-import { Receivable } from "packets/utilities/index.js";
-import { define, byte, char } from "packets/utilities/decorators.js";
-import { PacketType } from "packets/types/PacketType.js";
+import { Receivable } from "@app/packets/utilities/index.js";
+import { define, byte, char } from "@app/packets/utilities/decorators.js";
+import { PacketType } from "@app/packets/types/PacketType.js";
 
 @define
 export class IS_SLC extends Receivable {

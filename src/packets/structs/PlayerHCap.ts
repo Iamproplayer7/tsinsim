@@ -1,6 +1,6 @@
-import { Struct } from "packets/utilities/index.js";
-import { define, byte } from "../utilities/decorators.js";
-import { PlayerHCapFlags } from "packets/enums/index.js";
+import { Struct } from "@app/packets/utilities/index.js";
+import { define, byte } from "@app/packets/utilities/decorators.js";
+import { PlayerHCapFlags } from "@app/packets/enums/index.js";
 
 @define
 export class PlayerHCap extends Struct {

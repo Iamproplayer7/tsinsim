@@ -1,6 +1,6 @@
-import { Struct } from "packets/utilities/index.js";
-import { define, byte, short, word, int } from "../utilities/decorators.js";
-import { CompCarFlags } from "packets/enums/CompCarFlags.js";
+import { Struct } from "@app/packets/utilities/index.js";
+import { define, byte, short, word, int } from "@app/packets/utilities/decorators.js";
+import { CompCarFlags } from "@app/packets/enums/CompCarFlags.js";
 
 @define
 export class CompCar extends Struct {
