@@ -16,14 +16,14 @@ export class Receivable {
 }
 
 export class Struct extends Receivable {
-    pack(newSize?: number): Uint8Array {
+    pack(newSize: number = 0): Uint8Array {
         const keys = Object.getOwnPropertyNames(this);
         const values: string[] | number[] = keys.map((k) => {
             const value = Object.getOwnPropertyDescriptor(this, k)?.value; 
             return k == 'Size' ? value/4 : value;  
         });
-        const types: { type: string, length?: number }[] = keys.map((k) => getFormat(this, k));
-
+        const types: { type: string, length: number }[] = keys.map((k) => getFormat(this, k)).filter((type) => type != undefined);
+        
         return PacketPack(values, types, newSize);
     }
 }
