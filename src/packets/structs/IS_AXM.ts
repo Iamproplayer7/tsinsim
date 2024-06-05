@@ -21,15 +21,25 @@ export class IS_AXM extends Sendable {
     @byte() PMOFlags: PMOFlags | 0 = 0;
     @byte() private readonly Sp3 = 0;
 
-    Info: Partial<ObjectInfo> = {};
+    Info: ObjectInfo[] = [];
 
-    //todo: pack
+    pack(): Uint8Array {
+        this.NumO = this.Info.length;
+
+        var buffer = super.pack(this.Size + this.Info.length * 8);
+        for(const item of this.Info) {
+            buffer = Buffer.concat([buffer, item.pack()]);
+        }
+
+        return buffer;
+    }
+
     unpack(data: Buffer): this {
         super.unpack(data);
 
         for(var i = 0; i < this.NumO; i++) {
             const start = 8 + 8 * i;
-            this.Info = new ObjectInfo().unpack(data.subarray(start, start + 8));
+            this.Info.push(new ObjectInfo().unpack(data.subarray(start, start + 8)));
         }
     
         return this;
