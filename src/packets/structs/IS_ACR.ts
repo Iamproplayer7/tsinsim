@@ -1,6 +1,6 @@
 import parseLFSMessage from "parse-lfs-message";
 import { Receivable } from "packets/utilities/index.js";
-import { define, byte, char, word } from "./decorators.js";
+import { define, byte, word } from "./decorators.js";
 import { PacketType } from "packets/types/PacketType.js";
 import { AdminCommandResult } from "packets/enums/index.js";
 
