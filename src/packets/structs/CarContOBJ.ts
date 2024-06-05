@@ -1,5 +1,5 @@
-import { Struct } from "@app/packets/utilities/index.js";
-import { define, byte, short } from "@app/packets/utilities/decorators.js";
+import { Struct } from "../utilities/index.js";
+import { define, byte, short } from "../utilities/decorators.js";
 
 @define
 export class CarContOBJ extends Struct {

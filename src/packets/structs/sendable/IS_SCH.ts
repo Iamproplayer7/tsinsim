@@ -1,6 +1,6 @@
-import { Sendable } from "@app/packets/utilities/index.js";
-import { define, byte } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
+import { Sendable } from "../../utilities/index.js";
+import { define, byte } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
 
 @define
 export class IS_SCH extends Sendable {

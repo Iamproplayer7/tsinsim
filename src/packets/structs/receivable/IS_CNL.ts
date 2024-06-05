@@ -1,7 +1,7 @@
-import { Receivable } from "@app/packets/utilities/index.js";
-import { define, byte } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { LeaveReason } from "@app/packets/enums/LeaveReason.js";
+import { Receivable } from "../../utilities/index.js";
+import { define, byte } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { LeaveReason } from "../../enums/LeaveReason.js";
 
 @define
 export class IS_CNL extends Receivable {

@@ -1,7 +1,7 @@
-import { Receivable } from "@app/packets/utilities/index.js";
-import { define, byte, unsigned } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { CSCAction } from "@app/packets/enums/CSCAction.js";
+import { Receivable } from "../../utilities/index.js";
+import { define, byte, unsigned } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { CSCAction } from "../../enums/CSCAction.js";
 import { CarContOBJ } from "../CarContOBJ.js";
 
 @define

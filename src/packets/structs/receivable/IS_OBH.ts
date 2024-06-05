@@ -1,7 +1,7 @@
-import { Receivable } from "@app/packets/utilities/index.js";
-import { define, byte, word, short } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { ObjectIndex, OBHFlags } from "@app/packets/enums/index.js";
+import { Receivable } from "../../utilities/index.js";
+import { define, byte, word, short } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { ObjectIndex, OBHFlags } from "../../enums/index.js";
 import { CarContOBJ } from "../CarContOBJ.js";
 
 @define

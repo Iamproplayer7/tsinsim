@@ -1,7 +1,7 @@
-import { Receivable } from "@app/packets/utilities/index.js";
-import { define, byte, unsigned, word, char } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { ConfirmationFlags, PlayerFlags } from "@app/packets/enums/index.js";
+import { Receivable } from "../../utilities/index.js";
+import { define, byte, unsigned, word, char } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { ConfirmationFlags, PlayerFlags } from "../../enums/index.js";
 
 @define
 export class IS_RES extends Receivable {

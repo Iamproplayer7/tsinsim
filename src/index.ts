@@ -1,4 +1,4 @@
-export { InSim } from '@app/InSim.js';
-export * from '@app/packets/structs/index.js';
-export * from '@app/packets/enums/index.js';
-export * from '@app/packets/types/index.js';
+export { InSim } from './InSim.js';
+export * from './packets/structs/index.js';
+export * from './packets/enums/index.js';
+export * from './packets/types/index.js';

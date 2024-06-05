@@ -1,7 +1,7 @@
-import { Sendable } from "@app/packets/utilities/index.js";
-import { define, byte } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { PMOAction, PMOFlags } from "@app/packets/enums/index.js";
+import { Sendable } from "../../utilities/index.js";
+import { define, byte } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { PMOAction, PMOFlags } from "../../enums/index.js";
 import { ObjectInfo } from "../ObjectInfo.js";
 
 @define

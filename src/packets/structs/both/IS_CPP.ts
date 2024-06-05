@@ -1,8 +1,8 @@
-import { Sendable } from "@app/packets/utilities/index.js";
-import { define, byte, word, int, float } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { ViewIdentifier } from "@app/packets/enums/ViewIdentifier.js";
-import { StateFlags } from "@app/packets/enums/StateFlags.js";
+import { Sendable } from "../../utilities/index.js";
+import { define, byte, word, int, float } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { ViewIdentifier } from "../../enums/ViewIdentifier.js";
+import { StateFlags } from "../../enums/StateFlags.js";
 
 @define
 export class IS_CPP extends Sendable {

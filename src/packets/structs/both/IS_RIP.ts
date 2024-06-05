@@ -1,7 +1,7 @@
-import { Sendable } from "@app/packets/utilities/index.js";
-import { define, byte, unsigned, word, char } from "@app/packets/utilities/decorators.js";
-import { ReplayError, ReplayMode, ReplayOptions } from "@app/packets/enums/index.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
+import { Sendable } from "../../utilities/index.js";
+import { define, byte, unsigned, word, char } from "../../utilities/decorators.js";
+import { ReplayError, ReplayMode, ReplayOptions } from "../../enums/index.js";
+import { PacketType } from "../../types/PacketType.js";
 
 @define
 export class IS_RIP extends Sendable {

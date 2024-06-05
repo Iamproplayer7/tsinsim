@@ -1,6 +1,6 @@
-import { Receivable } from "@app/packets/utilities/index.js";
-import { define, byte, char, word } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
+import { Receivable } from "../../utilities/index.js";
+import { define, byte, char, word } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
 
 @define
 export class IS_AXI extends Receivable {

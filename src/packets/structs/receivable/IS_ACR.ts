@@ -1,8 +1,8 @@
 import parseLFSMessage from "parse-lfs-message";
-import { Receivable } from "@app/packets/utilities/index.js";
-import { define, byte, word } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { AdminCommandResult } from "@app/packets/enums/index.js";
+import { Receivable } from "../../utilities/index.js";
+import { define, byte, word } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { AdminCommandResult } from "../../enums/index.js";
 
 @define
 export class IS_ACR extends Receivable {

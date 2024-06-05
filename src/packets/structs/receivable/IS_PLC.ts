@@ -1,7 +1,7 @@
-import { Sendable } from "@app/packets/utilities/index.js";
-import { define, byte, unsigned } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { CarFlags } from "@app/packets/enums/CarFlags.js";
+import { Sendable } from "../../utilities/index.js";
+import { define, byte, unsigned } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { CarFlags } from "../../enums/CarFlags.js";
 
 @define
 export class IS_PLC extends Sendable {

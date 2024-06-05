@@ -1,6 +1,6 @@
-import { Struct } from "@app/packets/utilities/index.js";
-import { define, byte, short } from "@app/packets/utilities/decorators.js";
-import { ObjectIndex } from "@app/packets/enums/ObjectIndex.js";
+import { Struct } from "../utilities/index.js";
+import { define, byte, short } from "../utilities/decorators.js";
+import { ObjectIndex } from "../enums/ObjectIndex.js";
 
 @define
 export class ObjectInfo extends Struct {

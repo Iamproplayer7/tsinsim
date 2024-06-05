@@ -1,7 +1,7 @@
-import { Receivable} from "@app/packets/utilities/index.js";
-import { define, byte, float, word, char } from "@app/packets/utilities/decorators.js";
-import { PacketType } from "@app/packets/types/PacketType.js";
-import { StateFlags, ViewIdentifier } from "@app/packets/enums/index.js";
+import { Receivable} from "../../utilities/index.js";
+import { define, byte, float, word, char } from "../../utilities/decorators.js";
+import { PacketType } from "../../types/PacketType.js";
+import { StateFlags, ViewIdentifier } from "../../enums/index.js";
 
 @define
 export class IS_STA extends Receivable {
