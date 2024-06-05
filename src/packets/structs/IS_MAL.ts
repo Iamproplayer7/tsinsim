@@ -1,5 +1,5 @@
 import { Sendable } from "packets/utilities/index.js";
-import { define, byte, char } from "./decorators.js";
+import { define, byte } from "./decorators.js";
 import { PacketType } from "packets/types/PacketType.js";
 
 @define

@@ -1,4 +1,4 @@
-import { Receivable, Sendable } from "packets/utilities/index.js";
+import { Receivable } from "packets/utilities/index.js";
 import { define, byte, char } from "./decorators.js";
 import { PacketType } from "packets/types/PacketType.js";
 
