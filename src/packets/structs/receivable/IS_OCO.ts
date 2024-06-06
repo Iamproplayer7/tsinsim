@@ -5,7 +5,7 @@ import { OCOAction, ObjectIndex } from "../../enums/index.js";
 
 @define
 export class IS_OCO extends Sendable {
-    constructor(options: Partial<IS_BTN> = {}) { 
+    constructor(options: Partial<IS_OCO> = {}) { 
         super(); 
         Object.assign(this, options);
     }
