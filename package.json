@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"name": "tsinsim",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "An InSim library for Node.js (JavaScript runtime environment) with TypeScript support.",
 	"main": "./dist/index.js",
 	"types": "./dist/types/src/index.d.ts",
@@ -11,7 +11,7 @@
 			"default": "./dist/src/index.js"
 		},
 		"./packets": {
-			"types": "./dist/types/src/packets/index.d.ts",
+			"types": "./dist/types/src/packets/structs/index.d.ts",
 			"default": "./dist/src/packets/structs/index.js"
 		},
 		"./enums": {
