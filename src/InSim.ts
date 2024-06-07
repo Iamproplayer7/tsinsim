@@ -79,7 +79,6 @@ export class InSim extends Events {
         if(this.stream === null) return;
 
         this.stream.write(packet.pack());
-        console.log('-> Sent:', PacketType[packet.Type]);
     }
 
     deserializePacket(data: Buffer): void {
@@ -100,8 +99,6 @@ export class InSim extends Events {
         if(!packetClass) {
             return console.log('[InSim:deserializePacket] packetClass for packetType: ' + packetType + ' ID: ' + packetId + ' unknown!');
         }
-
-        if(packetType !== 'ISP_MCI') console.log('<- Received', packetType);
 
         this.fire(packetId, (new packetClass).unpack(data));
     }
