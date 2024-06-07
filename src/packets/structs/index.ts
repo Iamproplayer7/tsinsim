@@ -80,3 +80,6 @@ export { CompCar } from './CompCar.js';
 export { NodeLap } from './NodeLap.js';
 export { ObjectInfo } from './ObjectInfo.js';
 export { PlayerHCap } from './PlayerHCap.js';
+
+/* * UTILITIES */
+export { Sendable, Receivable, Struct } from '../utilities/index.js';
