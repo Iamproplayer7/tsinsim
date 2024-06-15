@@ -24,10 +24,10 @@ export class IS_AXM extends Sendable {
     Info: ObjectInfo[] = [];
 
     pack(): Uint8Array {
-        this.NumO = this.Info.length;
+        this.NumO = this.Info.length > 60 ? 60 : this.Info.length;
 
         var buffer = super.pack(this.Size + this.Info.length * 8);
-        for(const item of this.Info) {
+        for(const item of this.Info.slice(0, 60)) {
             buffer = Buffer.concat([buffer, item.pack()]);
         }
 
