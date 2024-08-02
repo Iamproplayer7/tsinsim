@@ -71,6 +71,7 @@ export { IS_REO } from './both/IS_REO.js';
 export { IS_RIP } from './both/IS_RIP.js';
 export { IS_SSH } from './both/IS_SSH.js';
 export { IS_CPP } from './both/IS_CPP.js';
+export { IS_IPB } from './both/IS_IPB.js';
 
 /* * STRUCTURES */
 export { CarContact } from './CarContact.js';
