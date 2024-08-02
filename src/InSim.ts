@@ -24,7 +24,7 @@ export class InSim extends Events {
         this.stream.on('connect', () => {
             this.sendPacket(new IS_ISI({ ...this.InSimOptions }));
 
-            for(const value of [6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27]) {
+            for(const value of [6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 29]) {
                 this.sendPacket(new IS_TINY({ ReqI: 1, SubT: value }));
             }
 
