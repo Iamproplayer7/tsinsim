@@ -2,10 +2,10 @@ export enum StateFlags {
     ISS_GAME			= 1,		// in game (or MPR)
     ISS_REPLAY			= 2,		// in SPR
     ISS_PAUSED			= 4,		// paused
-    ISS_SHIFTU			= 8,		// SHIFT+U mode
+    ISS_SHIFTU			= 8,		// free view mode
     ISS_DIALOG			= 16,		// in a dialog
     ISS_SHIFTU_FOLLOW	= 32,		// FOLLOW view
-    ISS_SHIFTU_NO_OPT	= 64,		// SHIFT+U buttons hidden
+    ISS_SHIFTU_NO_OPT	= 64,		// free view buttons hidden
     ISS_SHOW_2D			= 128,		// showing 2d display
     ISS_FRONT_END		= 256,		// entry screen
     ISS_MULTI			= 512,		// multiplayer mode

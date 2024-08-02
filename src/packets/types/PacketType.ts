@@ -66,4 +66,5 @@ export enum PacketType {
 	ISP_CIM,		// 64 - info			: connection's interface mode
 	ISP_MAL,		// 65 - both ways		: set mods allowed
 	ISP_PLH,		// 66 - both ways		: set player handicaps
+	ISP_IPB,		// 67 - both ways		: set IP bans
 };
