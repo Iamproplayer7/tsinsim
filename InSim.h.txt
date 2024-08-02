@@ -22,23 +22,27 @@ const int INSIM_VERSION = 9;
 // CHANGES
 // =======
 
-// Version 0.7E
-// ------------
+// 0.7F
+// ----
+// IS_IPB / TINY_IPB - set / get list of IP bans
+
+// 0.7E
+// ----
 // License byte added to IS_NCI packet (after Language byte)
 // IS_PLH packet sets handicaps for individual players
 // TINY_PLH - request IS_PLH listing player handicaps
 // SMALL_LCL - full control of lights including fog and extra lights
 
-// Version 0.7A (INSIM_VERSION increased to 9)
-// ------------
+// 0.7A (INSIM_VERSION increased to 9)
+// ----
 // New size byte for packets - now represents packet size / 4
 // - this allows much larger packets, up to 1020 bytes
 // IS_AXM maximum objects increased to 60 (was 30) - see AXM_MAX_OBJECTS
 // IS_MCI maximum cars increased to 16 (was 8) - see MCI_MAX_CARS
 // IS_MAL / TINY_MAL - set / get list of mods allowed on host
 
-// Version 0.6V
-// ------------
+// 0.6V
+// ----
 // NLP / MCI minimum time interval reduced to 10 ms (was 40 ms)
 // IS_CPP FOV can now be used in-car but not smoothed (0 = no change)
 // IS_CPP Pos is now relative to "Centre view" not the user setting
@@ -52,21 +56,21 @@ const int INSIM_VERSION = 9;
 // IS_SPX Fuel200 : fuel remaining
 // IS_LAP Fuel200 : fuel remaining
 
-// Version 0.6T (INSIM_VERSION increased to 8)
-// ------------
+// 0.6T (INSIM_VERSION increased to 8)
+// ----
 // New value PMO_POSITION for IS_AXM packet to report a blank position
 // New packet IS_CIM reports a connection's interface mode
 // New values TTC_SEL_START and TTC_SEL_STOP for IS_TTC
 // New value PMO_GET_Z for IS_AXM packet to report Z values
 // New values PMO_SELECTION_REAL, PMO_MOVE_MODIFY, PMO_AVOID_CHECK
 
-// Version 0.6N
-// ------------
+// 0.6N
+// ----
 // Added ISS_DIALOG and ISS_TEXT_ENTRY to the ISS state flags
 // New packet SMALL_LCS - set local car switches (lights, horn, siren)
 
-// Version 0.6M (INSIM_VERSION increased to 7)
-// ------------
+// 0.6M (INSIM_VERSION increased to 7)
+// ----
 // Backward compatibility system - send INSIM_VERSION in the IS_ISI
 // Older programs (that send zero) are assumed to require version 6
 // New join request system enabled if ISF_REQ_JOIN is set in IS_ISI
@@ -87,19 +91,19 @@ const int INSIM_VERSION = 9;
 // Added TINY_ALC and SMALL_ALC to get and set allowed cars (like /cars)
 // Value 5 (out of bounds) added to the IS_HLV packet
 
-// Version 0.6H (INSIM_VERSION increased to 6)
-// ------------
+// 0.6H (INSIM_VERSION increased to 6)
+// ----
 // IS_REO and IS_NLP increased in size to allow 40 drivers
 // ObjectInfo Zchar is now Zbyte - see layout file description
 // ISP_NCI packet added to give host more info about new guest
 
-// Version 0.6C
-// ------------
+// 0.6C
+// ----
 // Small change to the in-game usage of IS_REO - only valid after SMALL_VTA
 // Some more values (CPW / OOS / JOOS / HACK) added to the leave reasons
 
-// Version 0.6B (INSIM_VERSION increased to 5)
-// ------------
+// 0.6B (INSIM_VERSION increased to 5)
+// ----
 // Lap timing info added to IS_RST (Timing byte)
 // NLP / MCI minimum time interval reduced to 40 ms (was 50 ms)
 // TINY_VTC now cancels game votes even if the majority has not been reached
@@ -120,8 +124,8 @@ const int INSIM_VERSION = 9;
 // FIX: OutGaugePack ID was always zero regardless of ID in cfg.txt
 // FIX: InSim camera with vertical pitch would cause LFS to crash
 
-// Version 0.5Z (no change to INSIM_VERSION)
-// ------------
+// 0.5Z (no change to INSIM_VERSION)
+// ----
 // NLP / MCI packets are now output at regular intervals
 // CCI_LAG bit added to the CompCar structure
 
@@ -310,6 +314,7 @@ enum // the second byte of any packet is one of these
 	ISP_CIM,		// 64 - info			: connection's interface mode
 	ISP_MAL,		// 65 - both ways		: set mods allowed
 	ISP_PLH,		// 66 - both ways		: set player handicaps
+	ISP_IPB,		// 67 - both ways		: set IP bans
 };
 
 enum // the fourth byte of an IS_TINY packet is one of these
@@ -341,8 +346,9 @@ enum // the fourth byte of an IS_TINY packet is one of these
 	TINY_ALC,		// 24 - info request	: send a SMALL_ALC (allowed cars)
 	TINY_AXM,		// 25 - info request	: send IS_AXM packets for the entire layout
 	TINY_SLC,		// 26 - info request	: send IS_SLC packets for all connections
-	TINY_MAL,		// 27 - info request	: send IS_MAL listing the currently allowed mods
+	TINY_MAL,		// 27 - info request	: send IS_MAL listing the allowed mods
 	TINY_PLH,		// 28 - info request	: send IS_PLH listing player handicaps
+	TINY_IPB,		// 29 - info request	: send IS_IPB listing the IP bans
 };
 
 enum // the fourth byte of an IS_SMALL packet is one of these
@@ -447,9 +453,6 @@ struct IS_VER // VERsion
 // In that case your program may not be able to read some packets sent to it by LFS.
 // If you connect to an older LFS version then InSimVer may be lower than requested.
 
-// ReqI: non-zero		(returned in the reply)
-// SubT: TINY_PING		(request a TINY_REPLY)
-
 
 // CLOSING InSim
 // =============
@@ -527,7 +530,7 @@ struct IS_STA // STAte
 };
 
 // InGameCam is the in game selected camera mode (which is
-// still selected even if LFS is actually in SHIFT+U mode).
+// still selected even if LFS is actually in free view mode).
 // For InGameCam's values, see "View identifiers" below.
 
 // ISS state flags
@@ -535,10 +538,10 @@ struct IS_STA // STAte
 #define ISS_GAME			1		// in game (or MPR)
 #define ISS_REPLAY			2		// in SPR
 #define ISS_PAUSED			4		// paused
-#define ISS_SHIFTU			8		// SHIFT+U mode
+#define ISS_SHIFTU			8		// free view mode
 #define ISS_DIALOG			16		// in a dialog
 #define ISS_SHIFTU_FOLLOW	32		// FOLLOW view
-#define ISS_SHIFTU_NO_OPT	64		// SHIFT+U buttons hidden
+#define ISS_SHIFTU_NO_OPT	64		// free view buttons hidden
 #define ISS_SHOW_2D			128		// showing 2d display
 #define ISS_FRONT_END		256		// entry screen
 #define ISS_MULTI			512		// multiplayer mode
@@ -558,7 +561,7 @@ struct IS_STA // STAte
 
 // These states can be set by a special packet:
 
-// ISS_SHIFTU_NO_OPT	- SHIFT+U buttons hidden
+// ISS_SHIFTU_NO_OPT	- free view buttons hidden
 // ISS_SHOW_2D			- showing 2d display
 // ISS_MPSPEEDUP		- multiplayer speedup option
 // ISS_SOUND_MUTE		- sound is switched off
@@ -1040,11 +1043,6 @@ struct IS_PLH // PLayer Handicaps - variable size
 // ReqI: 0
 // SubT: TINY_REN		(Race ENd)
 
-// You can instruct LFS host to cancel a vote using an IS_TINY
-
-// ReqI: 0
-// SubT: TINY_VTC		(VoTe Cancel)
-
 // The following packets are sent when the relevant events take place:
 
 struct IS_RST // Race STart
@@ -1132,7 +1130,7 @@ struct IS_SLC // SeLected Car - sent when a connection selects a car (empty if n
 
 // Allowed Mods
 
-// You can set a list of up to 120 mods that are allowed to be used on a host
+// You can set up to 120 mods that are allowed to be used on a host
 // Send zero to clear the list and allow all mods to be used
 
 const int MAL_MAX_MODS = 120;
@@ -1150,6 +1148,27 @@ struct IS_MAL // Mods ALlowed - variable size
 	byte	Sp3;
 
 	unsigned	SkinID	[MAL_MAX_MODS]; // SkinID of each mod in compressed format, 0 to MAL_MAX_MODS (NumM)
+};
+
+// IP Bans
+
+// You can set up to 120 IP addresses that are not allowed to join a host
+
+const int IPB_MAX_BANS = 120;
+
+struct IS_IPB // IP Bans - variable size
+{
+	byte	Size;		// 8 + NumB * 4
+	byte	Type;		// ISP_IPB
+	byte	ReqI;		// 0 unless this is a reply to a TINY_IPB request
+	byte	NumB;		// number of bans in this packet
+
+	byte	Sp0;
+	byte	Sp1;
+	byte	Sp2;
+	byte	Sp3;
+
+	in_addr		BanIPs	[MAL_MAX_MODS]; // IP addresses, 0 to IPB_MAX_BANS (NumB)
 };
 
 struct IS_CIM // Conn Interface Mode
@@ -1765,7 +1784,7 @@ const int NOT_CHANGED = 255;
 
 // In each case, ReqI must be non-zero, and will be returned in the reply packet
 
-// SubT: TINT_NCN - request all connections
+// SubT: TINY_NCN - request all connections
 // SubT: TINY_NPL - request all players
 // SubT: TINY_RES - request all results
 // SubT: TINY_NLP - request a single IS_NLP
@@ -2263,7 +2282,7 @@ enum
 // that it is needed to improve the frame rate.
 
 // NOTE 1) LFS makes sure that all objects are optimised when the race restarts.
-// NOTE 2) In the 'more' section of SHIFT+U there is info about optimised objects.
+// NOTE 2) In the 'more' section of free view there is info about optimised objects.
 
 // If you are using InSim to send many packets of objects (for example loading an
 // entire layout through InSim) then you must take care of the bandwidth and buffer
@@ -2372,7 +2391,7 @@ enum
 // You can set the viewed car and selected camera directly with a special packet
 // These are the states normally set in game by using the TAB and V keys
 
-struct IS_SCC // Set Car Camera - Simplified camera packet (not SHIFT+U mode)
+struct IS_SCC // Set Car Camera - Simplified camera packet (not free view mode)
 {
 	byte	Size;		// 8
 	byte	Type;		// ISP_SCC
@@ -2391,11 +2410,11 @@ struct IS_SCC // Set Car Camera - Simplified camera packet (not SHIFT+U mode)
 // ---------------------
 
 // A Camera Position Packet can be used for LFS to report a camera position and state.
-// An InSim program can also send one to set LFS camera position in game or SHIFT+U mode.
+// An InSim program can also send one to set LFS camera position in game or free view mode.
 
 // Type: "Vec": 3 ints (X, Y, Z) - 65536 means 1 metre
 
-struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR SHIFT+U mode)
+struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR free view mode)
 {
 	byte	Size;		// 32
 	byte	Type;		// ISP_CPP
@@ -2419,20 +2438,20 @@ struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR SHIFT+U mode)
 
 // The ISS state flags that can be set are:
 
-// ISS_SHIFTU			- in SHIFT+U mode
+// ISS_SHIFTU			- in free view mode
 // ISS_SHIFTU_FOLLOW	- FOLLOW view
 // ISS_VIEW_OVERRIDE	- override user view
 
 // On receiving this packet, LFS will set up the camera to match the values in the packet,
-// including switching into or out of SHIFT+U mode depending on the ISS_SHIFTU flag.
+// including switching into or out of free view mode depending on the ISS_SHIFTU flag.
 
 // If ISS_VIEW_OVERRIDE is set, the in-car view Heading, Pitch, Roll and FOV [not smooth]
 // can be set using this packet.  Otherwise normal in game control will be used.
 
-// Position vector (Vec Pos) - in SHIFT+U mode, Pos can be either relative or absolute.
+// Position vector (Vec Pos) - in free view mode, Pos can be either relative or absolute.
 
 // If ISS_SHIFTU_FOLLOW is set, it's a following camera, so the position is relative to
-// the selected car.  Otherwise, the position is absolute, as used in normal SHIFT+U mode.
+// the selected car.  Otherwise, the position is absolute, as used in normal free view mode.
 
 // NOTE: Set InGameCam or ViewPLID to 255 to leave that option unchanged.
 
@@ -2441,7 +2460,7 @@ struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR SHIFT+U mode)
 
 // The "Time" value in the packet is used for camera smoothing.  A zero Time means instant
 // positioning.  Any other value (milliseconds) will cause the camera to move smoothly to
-// the requested position in that time.  This is most useful in SHIFT+U camera modes or
+// the requested position in that time.  This is most useful in free view camera modes or
 // for smooth changes of internal view when using the ISS_VIEW_OVERRIDE flag.
 
 // NOTE: You can use frequently updated camera positions with a longer Time value than
@@ -2605,7 +2624,7 @@ enum
 // - main entry screen
 // - race setup screen
 // - in game
-// - SHIFT+U mode
+// - free view mode
 
 // The recommended area for most buttons is defined by:
 
