@@ -14,5 +14,5 @@ export class IS_MST extends Sendable {
     @byte() readonly ReqI = 0;
     @byte() readonly Zero = 0;
 
-    @char(64) Msg = 0;
+    @char(64) Msg = '';
 }
