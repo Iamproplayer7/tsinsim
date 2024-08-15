@@ -1,6 +1,7 @@
 import { Sendable } from "../../utilities/index.js";
 import { define, byte } from "../../utilities/decorators.js";
 import { PacketType } from "../../types/PacketType.js";
+import { ButtonFunction } from "../../enums/ButtonFunction.js";
 
 @define
 export class IS_BFN extends Sendable {
@@ -12,7 +13,7 @@ export class IS_BFN extends Sendable {
     @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_BFN;
     @byte() readonly ReqI = 0;
-    @byte() readonly Zero = 0;
+    @byte() SubT: ButtonFunction = ButtonFunction.BFN_DEL_BTN;
 
     @byte() UCID = 0;
     @byte() ClickID = 0;
