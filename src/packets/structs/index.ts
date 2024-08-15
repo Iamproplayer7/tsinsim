@@ -28,7 +28,6 @@ export { IS_PEN } from './receivable/IS_PEN.js';
 export { IS_PFL } from './receivable/IS_PFL.js';
 export { IS_PIT } from './receivable/IS_PIT.js';
 export { IS_PLA } from './receivable/IS_PLA.js';
-export { IS_PLC } from './receivable/IS_PLC.js';
 export { IS_PLL } from './receivable/IS_PLL.js';
 export { IS_PLP } from './receivable/IS_PLP.js';
 export { IS_PSF } from './receivable/IS_PSF.js';
@@ -59,6 +58,7 @@ export { IS_MST } from './sendable/IS_MST.js';
 export { IS_MOD } from './sendable/IS_MOD.js';
 export { IS_JRR } from './sendable/IS_JRR.js';
 export { IS_MTC } from './sendable/IS_MTC.js';
+export { IS_PLC } from './sendable/IS_PLC.js';
 
 /* * RECEIVABLE & SENDABLE PACKETS */
 export { IS_TINY } from './both/IS_TINY.js';
