@@ -5,7 +5,7 @@ import { CarFlags } from "../../enums/CarFlags.js";
 
 @define
 export class IS_PLC extends Sendable {
-    constructor(options: Partial<IS_PLC> = {}) { 
+    constructor(options: Omit<Partial<IS_PLC>, "pack"> = {}) { 
         super(); 
         Object.assign(this, options);
     }
@@ -14,6 +14,11 @@ export class IS_PLC extends Sendable {
     @byte() readonly Type = PacketType.ISP_PLC;
     @byte() readonly ReqI = 0;
     @byte() readonly Zero = 0;
+
+    @byte() UCID = 0;
+    @byte() readonly Sp1 = 0;
+    @byte() readonly Sp2 = 0;
+    @byte() readonly Sp3 = 0;
 
     @unsigned() Cars: CarFlags = 0;
 }
