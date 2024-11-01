@@ -25,7 +25,22 @@ export class IS_MTC extends Sendable {
 
     pack(): Uint8Array {
         this.Text = unicodeToLfs(this.Text);
-        const buf = Buffer.from(this.Text).subarray(0, 127);
+       
+        var buf = Buffer.from(this.Text).subarray(0, 127);
+
+        // fix » symbol
+        const f = () => {
+            const indexOf = buf.indexOf('c2bb', 0, 'hex');
+            if(indexOf !== -1) {
+                buf = Buffer.concat([buf.subarray(0, indexOf), buf.subarray(indexOf+1, buf.length)])
+            }
+
+            if(buf.indexOf('c2bb', 0, 'hex') !== -1) {
+                f();
+            }
+        }
+        f();
+
         const textLength = buf.length + 1;
         const len: number = textLength % 4 != 0 ? textLength + 4 - (textLength % 4) : textLength;
 
