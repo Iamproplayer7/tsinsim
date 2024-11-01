@@ -17,6 +17,17 @@ export class IS_PLH extends Sendable {
 
     HCaps: PlayerHCap[] = [];
 
+    pack(): Uint8Array {
+        this.NumP = this.HCaps.length;
+
+        var buffer = super.pack(this.Size + this.HCaps.length * 4);
+        for(const item of this.HCaps) {
+            buffer = Buffer.concat([buffer, item.pack()]);
+        }
+
+        return buffer;
+    }
+
     unpack(data: Buffer): this {
         super.unpack(data);
 
