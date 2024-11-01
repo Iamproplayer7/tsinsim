@@ -31,7 +31,17 @@ export class IS_BTN extends Sendable {
 
     pack(): Uint8Array { 
         this.Text = unicodeToLfs(this.Text);
-        const buf = Buffer.from(this.Text).subarray(0, 239);
+ 
+        var buf = Buffer.from(this.Text).subarray(0, 239);
+
+        // fix symbol
+        for(const d of ['c2aa', 'c3b8', 'c2a9', 'c3ba', 'c2ab', 'c3bb', 'c3bb', 'c2a8', 'c3b9']) {
+            const indexOf = buf.indexOf(d, 0, 'hex');
+            if(indexOf !== -1) {
+                buf = Buffer.concat([buf.subarray(0, indexOf), buf.subarray(indexOf+1, buf.length)])
+            }
+        }
+
         const textLength = buf.length + 1;
         const len: number = textLength % 4 != 0 ? textLength + 4 - (textLength % 4) : textLength;
 
