@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"name": "tsinsim",
-	"version": "1.2.3",
+	"version": "1.2.4",
 	"description": "An InSim library for Node.js (JavaScript runtime environment) with TypeScript support.",
 	"main": "./dist/index.js",
 	"types": "./dist/types/src/index.d.ts",
