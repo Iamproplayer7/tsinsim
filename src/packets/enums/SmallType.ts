@@ -10,4 +10,5 @@ export enum SmallType {
 	SMALL_ALC,		//  8 - both ways		: set or get allowed cars (TINY_ALC)
 	SMALL_LCS,		//  9 - instruction		: set local car switches (flash, horn, siren)
 	SMALL_LCL,		// 10 - instruction		: set local car lights
+	SMALL_AII,		// 11 - info request	: get local AI info
 };

@@ -27,6 +27,16 @@ export const PacketPack = (vk: { [key: string]: { value: string, type: string, l
             else if(type == 'float') {
                 buffer.writeFloatLE(value, offset);
             }
+            else if(type == 'vector') {
+                buffer.writeFloatLE(value, offset);
+                buffer.writeFloatLE(value, offset+4);
+                buffer.writeFloatLE(value, offset+8);
+            }
+            else if(type == 'vec') {
+                buffer.writeInt32LE(value, offset);
+                buffer.writeInt32LE(value, offset+4);
+                buffer.writeInt32LE(value, offset+8);
+            }
         }
         else {
             if(type == 'char') {

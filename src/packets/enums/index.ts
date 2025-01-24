@@ -45,3 +45,4 @@ export { UCOAction } from './UCOAction.js';
 export { OCOAction } from './OCOAction.js';
 export { TTCType } from './TTCType.js';
 export { PlayerHCapFlags } from './PlayerHCapFlags.js';
+export { AICInput } from './AICInput.js';

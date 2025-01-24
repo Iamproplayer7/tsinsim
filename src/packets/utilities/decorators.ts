@@ -37,6 +37,16 @@ export const float = () => {
     return Reflect.metadata(key, { type: 'float', length: 4 });
 }
 
+/* 12-byte vector */
+export const vector = () => {
+    return Reflect.metadata(key, { type: 'vector', length: 12 });
+}
+
+/* 12-byte vec */
+export const vec = () => {
+    return Reflect.metadata(key, { type: 'vec', length: 12 });
+}
+
 export const getFormat = (target: any, propertyKey: string) => {
     return Reflect.getMetadata(key, target, propertyKey);
 }

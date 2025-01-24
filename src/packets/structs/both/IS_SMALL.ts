@@ -10,7 +10,7 @@ export class IS_SMALL extends Sendable {
         Object.assign(this, options);
     }
 
-    @byte() readonly Size = 5;
+    @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_SMALL;
     @byte() ReqI = 0;
     @byte() SubT: SmallType = SmallType.SMALL_NONE;

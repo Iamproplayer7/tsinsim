@@ -43,6 +43,7 @@ export { IS_NLP } from './receivable/IS_NLP.js';
 export { IS_CON } from './receivable/IS_CON.js';
 export { IS_UCO } from './receivable/IS_UCO.js';
 export { IS_OCO } from './receivable/IS_OCO.js';
+export { IS_AII } from './receivable/IS_AII.js';
 
 /* * SENDABLE PACKETS */
 export { IS_TTC } from './sendable/IS_TTC.js';
@@ -59,6 +60,7 @@ export { IS_MOD } from './sendable/IS_MOD.js';
 export { IS_JRR } from './sendable/IS_JRR.js';
 export { IS_MTC } from './sendable/IS_MTC.js';
 export { IS_PLC } from './sendable/IS_PLC.js';
+export { IS_AIC } from './sendable/IS_AIC.js';
 
 /* * RECEIVABLE & SENDABLE PACKETS */
 export { IS_TINY } from './both/IS_TINY.js';
@@ -81,6 +83,7 @@ export { CompCar } from './CompCar.js';
 export { NodeLap } from './NodeLap.js';
 export { ObjectInfo } from './ObjectInfo.js';
 export { PlayerHCap } from './PlayerHCap.js';
+export { AIInputVal } from './AIInputVal.js';
 
 /* * UTILITIES */
 export { Sendable, Receivable, Struct } from '../utilities/index.js';
