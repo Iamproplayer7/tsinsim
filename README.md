@@ -5,7 +5,7 @@ It allows you connect to [Live for Speed](https://www.lfs.net) Server over a [TC
 <br>
 
 ## InSim compatibility
-Fully compatible with [InSim Version 9](https://github.com/Iamproplayer7/tsinsim/blob/main/InSim.h.txt) (0.7F).
+Fully compatible with [InSim Version 9](https://github.com/Iamproplayer7/tsinsim/blob/main/InSim.h.txt) (0.7F5).
 
 ## Requirements
 This module requires [Node.Js](https://nodejs.org/en) and [TypeScript](https://www.typescriptlang.org/).<br>
