@@ -8,14 +8,14 @@ export class OSMain extends Struct {
         Object.assign(this, options);
     }
     
-    @vector() AngVel = 0;
+    @vector() AngVel = { X: 0, Y: 0, Z: 0 };
 
     @float() Heading = 0;
     @float() Pitch = 0;
     @float() Roll = 0;
 
-    @vector() Accel = 0;
-    @vector() Vel = 0;
+    @vector() Accel = { X: 0, Y: 0, Z: 0 };
+    @vector() Vel = { X: 0, Y: 0, Z: 0 };
 
-    @vec() Pos = 0;
+    @vec() Pos = { X: 0, Y: 0, Z: 0 };
 };

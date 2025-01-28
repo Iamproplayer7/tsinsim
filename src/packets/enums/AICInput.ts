@@ -20,6 +20,9 @@ export enum AICInput {
     CS_FOGREAR,
     CS_FOGFRONT,
     CS_NUM,
+    CS_SEND_AI_INFO = 240,
+    CS_REPEAT_AI_INFO = 241,
+    CS_SET_HELP_FLAGS = 253,
     RESET_ALL = 254,
     STOP_CONTROL = 255
 };

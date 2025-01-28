@@ -17,7 +17,9 @@ export class InSim extends Events {
     private buffer: Buffer = Buffer.alloc(0);
     connected: boolean = false;
 
-    constructor(private InSimOptions: Partial<IS_ISI>) { super(); }
+    constructor(private InSimOptions: Partial<IS_ISI>) { 
+        super(); 
+    }
 
     connect(connectionOptions: InSimConnectionOptions): void {
         this.stream = net.connect(connectionOptions.Port, connectionOptions.Host);
