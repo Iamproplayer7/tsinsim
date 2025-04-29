@@ -19,8 +19,8 @@ export class IS_CON extends Receivable {
     unpack(data: Buffer): this {
         super.unpack(data);
 
-        this.A = new CarContact().unpack(data.subarray(8, 16));
-        this.B = new CarContact().unpack(data.subarray(16, 32));
+        this.A = new CarContact().unpack(data.subarray(8, 24));
+        this.B = new CarContact().unpack(data.subarray(24, 40));
 
         return this;
     }

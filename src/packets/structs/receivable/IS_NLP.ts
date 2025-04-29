@@ -17,7 +17,7 @@ export class IS_NLP extends Receivable {
 
         for(var i = 0; i < this.NumP; i++) {
             const start = 4 + 6 * i;
-            this.Info.push(new NodeLap().unpack(data.subarray(start, start+4)))
+            this.Info.push(new NodeLap().unpack(data.subarray(start, start+6)))
         }
 
         return this;
