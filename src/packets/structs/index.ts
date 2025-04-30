@@ -84,6 +84,7 @@ export { NodeLap } from './NodeLap.js';
 export { ObjectInfo } from './ObjectInfo.js';
 export { PlayerHCap } from './PlayerHCap.js';
 export { AIInputVal } from './AIInputVal.js';
+export { OSMain } from './OSMain.js';
 
 /* * UTILITIES */
 export { Sendable, Receivable, Struct } from '../utilities/index.js';
