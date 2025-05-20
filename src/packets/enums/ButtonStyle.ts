@@ -1,4 +1,5 @@
 export enum ButtonStyle {
+    ISB_NONE    =   0,      // no style
     ISB_C1		=	1,		// you can choose a standard
     ISB_C2		=	2,		// interface colour using
     ISB_C4		=	4,		// these 3 lowest bits - see below
