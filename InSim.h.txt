@@ -2472,7 +2472,7 @@ struct IS_AIC // AI Control - variable size
 // CS_RESET_INPUTS - reset all inputs
 //		Most inputs are zero / CS_MSX is 32768 / CS_GEAR is 255
 
-// CS_STOP_CONTTROL
+// CS_STOP_CONTROL
 //		The AI driver will stop the car
 
 // AI car info
