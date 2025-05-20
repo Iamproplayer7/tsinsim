@@ -1,5 +1,6 @@
 import { Struct } from "../utilities/index.js";
 import { define, float, vector, vec } from "../utilities/decorators.js";
+import { Vector3 } from "../../utilities/vector.js";
 
 @define
 export class OSMain extends Struct {
@@ -8,14 +9,14 @@ export class OSMain extends Struct {
         Object.assign(this, options);
     }
     
-    @vector() AngVel = { X: 0, Y: 0, Z: 0 };
+    @vector() AngVel = new Vector3;
 
     @float() Heading = 0;
     @float() Pitch = 0;
     @float() Roll = 0;
 
-    @vector() Accel = { X: 0, Y: 0, Z: 0 };
-    @vector() Vel = { X: 0, Y: 0, Z: 0 };
+    @vector() Accel = new Vector3;
+    @vector() Vel = new Vector3;
 
-    @vec() Pos = { X: 0, Y: 0, Z: 0 };
+    @vec() Pos = new Vector3;
 };

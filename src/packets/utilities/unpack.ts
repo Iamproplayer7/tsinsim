@@ -1,7 +1,8 @@
 import parseLFSMessage from 'parse-lfs-message';
+import { Vector3 } from '../../utilities/vector.js';
 
-export const PacketUnpack = (vk: { [key: string]: { value: string, type: string, length: number } }, buffer: Buffer): { [key: string]: string | number | { X: number, Y: number, Z: number } } => {
-    const data: { [key: string]: string | number | { X: number, Y: number, Z: number } } = {};
+export const PacketUnpack = (vk: { [key: string]: { value: string, type: string, length: number } }, buffer: Buffer): { [key: string]: string | number | Vector3 } => {
+    const data: { [key: string]: string | number | Vector3 } = {};
 
     var offset: number = 0;
     for(const key of Object.keys(vk)) {
@@ -28,10 +29,10 @@ export const PacketUnpack = (vk: { [key: string]: { value: string, type: string,
                 data[key] = buffer.readFloatLE(offset);
             }
             else if(type == 'vector') {
-                data[key] = { X: buffer.readFloatLE(offset), Y: buffer.readFloatLE(offset+4), Z: buffer.readFloatLE(offset+8) };
+                data[key] = new Vector3(buffer.readFloatLE(offset), buffer.readFloatLE(offset+4), buffer.readFloatLE(offset+8));
             }
             else if(type == 'vec') {
-                data[key] = { X: buffer.readInt32LE(offset), Y: buffer.readInt32LE(offset+4), Z: buffer.readInt32LE(offset+8) };
+                data[key] = new Vector3(buffer.readInt32LE(offset), buffer.readInt32LE(offset+4), buffer.readInt32LE(offset+8));
             }
         }
         else {
