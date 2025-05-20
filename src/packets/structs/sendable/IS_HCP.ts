@@ -12,7 +12,7 @@ export class IS_HCP extends Sendable {
 
     @byte() readonly Size = 68;
     @byte() readonly Type = PacketType.ISP_HCP;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() readonly Zero = 0;
 
     Info: CarHCP[] = [];

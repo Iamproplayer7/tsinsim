@@ -11,7 +11,7 @@ export class IS_MOD extends Sendable {
 
     @byte() readonly Size = 68;
     @byte() readonly Type = PacketType.ISP_MOD;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() readonly Zero = 0;
 
     @int() Bits16 = 0;

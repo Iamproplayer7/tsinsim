@@ -13,7 +13,7 @@ export class IS_JRR extends Sendable {
 
     @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_JRR;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() PLID = 0;
 
     @byte() UCID = 0;

@@ -12,7 +12,7 @@ export class IS_PLC extends Sendable {
     
     @byte() readonly Size = 12;
     @byte() readonly Type = PacketType.ISP_PLC;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() readonly Zero = 0;
 
     @byte() UCID = 0;

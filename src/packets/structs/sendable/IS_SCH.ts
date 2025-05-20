@@ -11,7 +11,7 @@ export class IS_SCH extends Sendable {
 
     @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_SCH;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() readonly Zero = 0;
 
     @byte() CharB = 0;

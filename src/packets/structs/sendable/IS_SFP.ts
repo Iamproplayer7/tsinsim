@@ -12,7 +12,7 @@ export class IS_SFP extends Sendable {
 
     @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_SFP;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() readonly Zero = 0;
 
     @word() Flag = 0;

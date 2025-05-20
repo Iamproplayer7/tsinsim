@@ -12,7 +12,7 @@ export class IS_MSL extends Sendable {
 
     @byte() readonly Size = 100;
     @byte() readonly Type = PacketType.ISP_MSL;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() Sound: MessageSound = 0;
 
     @char(128) Msg = 0;

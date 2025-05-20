@@ -11,7 +11,7 @@ export class IS_MSX extends Sendable {
 
     @byte() readonly Size = 100;
     @byte() readonly Type = PacketType.ISP_MSX;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() readonly Zero = 0;
 
     @char(95) Msg = 0;

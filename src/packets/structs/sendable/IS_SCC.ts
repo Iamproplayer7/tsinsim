@@ -12,7 +12,7 @@ export class IS_SCC extends Sendable {
 
     @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_SCC;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() readonly Zero = 0;
 
     @byte() ViewPLID = 0;

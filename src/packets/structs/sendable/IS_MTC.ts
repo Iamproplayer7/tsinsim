@@ -13,7 +13,7 @@ export class IS_MTC extends Sendable {
 
     @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_MTC;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() Sound: MessageSound = 0;
 
     @byte() UCID = 0;

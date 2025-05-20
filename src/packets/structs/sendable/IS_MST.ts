@@ -12,7 +12,7 @@ export class IS_MST extends Sendable {
 
     @byte() readonly Size = 68;
     @byte() readonly Type = PacketType.ISP_MST;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() readonly Zero = 0;
 
     @char(64) Msg = '';

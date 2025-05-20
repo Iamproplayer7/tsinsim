@@ -12,7 +12,7 @@ export class IS_TTC extends Sendable {
     
     @byte() readonly Size = 8;
     @byte() readonly Type = PacketType.ISP_TTC;
-    @byte() readonly ReqI = 0;
+    @byte() ReqI = 0;
     @byte() SubT: TTCType = 0;
 
     @byte() UCID = 0;
