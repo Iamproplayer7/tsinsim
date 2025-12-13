@@ -4,7 +4,7 @@ export enum PlayerFlags {
     PIF_RESERVED_4		= 4,
     PIF_AUTOGEARS		= 8,
     PIF_SHIFTER			= 16,
-    PIF_RESERVED_32		= 32,
+    PIF_FLEXIBLE_STEER	= 32,
     PIF_HELP_B			= 64,
     PIF_AXIS_CLUTCH		= 128,
     PIF_INPITS			= 256,

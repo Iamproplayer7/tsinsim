@@ -1,18 +1,19 @@
 import { Receivable } from "../../utilities/index.js";
-import { define, byte, word, short } from "../../utilities/decorators.js";
+import { define, byte, word, short, unsigned } from "../../utilities/decorators.js";
 import { PacketType } from "../../types/PacketType.js";
 import { ObjectIndex, OBHFlags } from "../../enums/index.js";
 import { CarContOBJ } from "../CarContOBJ.js";
 
 @define
 export class IS_OBH extends Receivable {
-    @byte() readonly Size = 24;
+    @byte() readonly Size = 28;
     @byte() readonly Type = PacketType.ISP_OBH;
     @byte() readonly ReqI = 0;
     @byte() PLID = 0;
 
     @word() SPClose = 0;
-    @word() Time = 0;
+    @word() SpW = 0;
+    @unsigned() Time = 0;
 
     @short() X = 0;
     @short() Y = 0;
