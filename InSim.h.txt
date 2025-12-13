@@ -16,11 +16,34 @@
 // INSIM VERSION NUMBER (updated for version 0.7A)
 // ====================
 
-const int INSIM_VERSION = 9;
+const int INSIM_VERSION = 10;
 
 
 // CHANGES
 // =======
+
+// 0.8A (INSIM_VERSION increased to 10)
+// ----
+// TINY_LCL requests a SMALL_LCL (local car lights)
+// New value for Player flags - PIF_FLEXIBLE_STEER
+// New flag for Info byte in CompCar and CarContact - CCI_OOB
+// Removed info about 'optimisation' related to PMO_FILE_END
+// - static vertex buffers for objects are now created automatically
+// NOTE: maximum players in race increased to 48
+// NOTE: maximum number of results increased to 80
+// PLH_MAX_PLAYERS in IS_PLH increased to 48 (*)
+// REO_MAX_PLAYERS in IS_REO increased to 48 (*)
+// TINY_GTH renamed to TINY_GTM (Get Time in Ms)
+// SMALL_RTP now returns time in ms (#)
+// IS_OBH packet increased to allow time in ms (*)
+// IS_HLV packet increased to allow time in ms (*)
+// IS_CON packet increased to allow time in ms (*)
+// IS_UCO now sends time in ms (#)
+// IS_CSC now sends time in ms (#)
+// IS_RIP time values are now in ms (*)
+// (*) packet is no longer sent if InSimVer < 10
+// (#) still sends time in hundredths if InSimVer < 10
+// SMALL_TMS (time stop) and SMALL_STP (time step) are currently unavailable
 
 // 0.7F5
 // -----
@@ -333,9 +356,9 @@ enum // the fourth byte of an IS_TINY packet is one of these
 	TINY_VTC,		//  5 - both ways		: game vote cancel (info or request)
 	TINY_SCP,		//  6 - info request	: send camera pos
 	TINY_SST,		//  7 - info request	: send state info
-	TINY_GTH,		//  8 - info request	: get time in hundredths (i.e. SMALL_RTP)
+	TINY_GTM,		//  8 - info request	: get time in ms (in SMALL_RTP)
 	TINY_MPE,		//  9 - info			: multi player end
-	TINY_ISM,		// 10 - info request	: get multiplayer info (i.e. ISP_ISM)
+	TINY_ISM,		// 10 - info request	: get multiplayer info (in ISP_ISM)
 	TINY_REN,		// 11 - info			: race end (return to race setup screen)
 	TINY_CLR,		// 12 - info			: all players cleared from race
 	TINY_NCN,		// 13 - info request	: get NCN for all connections
@@ -355,6 +378,7 @@ enum // the fourth byte of an IS_TINY packet is one of these
 	TINY_MAL,		// 27 - info request	: send IS_MAL listing the allowed mods
 	TINY_PLH,		// 28 - info request	: send IS_PLH listing player handicaps
 	TINY_IPB,		// 29 - info request	: send IS_IPB listing the IP bans
+	TINY_LCL,		// 30 - info request	: send a SMALL_LCL for local car's lights
 };
 
 enum // the fourth byte of an IS_SMALL packet is one of these
@@ -365,11 +389,11 @@ enum // the fourth byte of an IS_SMALL packet is one of these
 	SMALL_VTA,		//  3 - report			: vote action
 	SMALL_TMS,		//  4 - instruction		: time stop
 	SMALL_STP,		//  5 - instruction		: time step
-	SMALL_RTP,		//  6 - info			: race time packet (reply to GTH)
+	SMALL_RTP,		//  6 - info			: race time packet (reply to TINY_GTM)
 	SMALL_NLI,		//  7 - instruction		: set node lap interval
-	SMALL_ALC,		//  8 - both ways		: set or get allowed cars (TINY_ALC)
+	SMALL_ALC,		//  8 - both ways		: set or get allowed cars (reply to TINY_ALC)
 	SMALL_LCS,		//  9 - instruction		: set local car switches (flash, horn, siren)
-	SMALL_LCL,		// 10 - instruction		: set local car lights
+	SMALL_LCL,		// 10 - both ways		: set or get local car lights (reply to TINY_LCL)
 	SMALL_AII,		// 11 - info request	: get local AI info
 };
 
@@ -585,7 +609,7 @@ struct IS_SFP // State Flags Pack
 	byte	Sp3;		// spare
 };
 
-// Other states must be set by using keypresses or messages (see below)
+// Other states must be set by using TEXT MESSAGES AND KEY PRESSES (see below)
 
 
 // SCREEN MODE
@@ -614,7 +638,7 @@ struct IS_MOD // MODe: send to LFS to change screen mode
 
 
 // TEXT MESSAGES AND KEY PRESSES
-// ==============================
+// =============================
 
 // You can send 64-byte text messages to LFS as if the user had typed them in.
 // Messages that appear on LFS screen (up to 128 bytes) are reported to the
@@ -772,6 +796,11 @@ struct IS_SCH // Single CHaracter
 // SubT: SMALL_LCS		(Local Car Switches)
 // UVal: Switches		(see below)
 
+// To find out the local car's lights at any time send this IS_TINY:
+
+// ReqI: non-zero		(returned in the reply)
+// SubT: TINY_LCL		(request a SMALL_LCL)
+
 // Switches bits
 
 // Bits 0 to 7 are a set of flags specifying which values to set.  You can set as many
@@ -914,7 +943,7 @@ struct IS_VTN // VoTe Notify
 
 // ReqI: 0
 // SubT: SMALL_ALC		(ALlowed Cars)
-// UVal: Cars			(see below)
+// UVal: Cars			(see CARS below)
 
 // To find out the allowed cars at any time (on guest or host) send this IS_TINY:
 
@@ -925,7 +954,7 @@ struct IS_VTN // VoTe Notify
 
 // ReqI: non-zero		(as received in the request packet)
 // SubT: SMALL_ALC		(ALlowed Cars)
-// UVal: Cars			(see below)
+// UVal: Cars			(see CARS below)
 
 // You can send a packet to limit the cars that can be used by a given connection
 // The resulting set of selectable cars is a subset of the cars set to be available
@@ -949,6 +978,8 @@ struct IS_PLC // PLayer Cars
 
 	unsigned	Cars;	// allowed cars - see below
 };
+
+// CARS
 
 // XF GTI			-       1
 // XR GT			-       2
@@ -1012,7 +1043,7 @@ struct PlayerHCap // Player handicaps in 4 bytes - there is an array of these in
 	byte	H_TRes;		// 0 to  50 - intake restriction
 };
 
-const int PLH_MAX_PLAYERS = 40; // NOTE: Increase if MAX_CARS_S2 is increased
+const int PLH_MAX_PLAYERS = 48; // NOTE: Increase if MAX_CARS_S2 is increased
 
 struct IS_PLH // PLayer Handicaps - variable size
 {
@@ -1068,7 +1099,7 @@ struct IS_RST // Race STart
 	byte	Weather;
 	byte	Wind;
 
-	word	Flags;		// race flags (must pit, can reset, etc - see below)
+	word	Flags;		// race flags (must pit, can reset, etc - HOSTF_x)
 	word	NumNodes;	// total number of nodes in the path
 	word	Finish;		// node index - finish line
 	word	Split1;		// node index - split 1
@@ -1260,7 +1291,7 @@ struct IS_CNL // ConN Leave
 	byte	ReqI;		// 0
 	byte	UCID;		// unique id of the connection which left
 
-	byte	Reason;		// leave reason (see below)
+	byte	Reason;		// leave reason (LEAVR_x)
 	byte	Total;		// number of connections including host
 	byte	Sp2;
 	byte	Sp3;
@@ -1365,7 +1396,7 @@ struct IS_LAP // LAP time
 	word	Flags;		// player flags
 
 	byte	Sp0;
-	byte	Penalty;	// current penalty value (see below)
+	byte	Penalty;	// current penalty value (PENALTY_x)
 	byte	NumStops;	// number of pit stops
 	byte	Fuel200;	// /showfuel yes: double fuel percent / no: 255
 };
@@ -1381,7 +1412,7 @@ struct IS_SPX // SPlit X time
 	unsigned	ETime;	// total time (ms)
 
 	byte	Split;		// split number 1, 2, 3
-	byte	Penalty;	// current penalty value (see below)
+	byte	Penalty;	// current penalty value (PENALTY_x)
 	byte	NumStops;	// number of pit stops
 	byte	Fuel200;	// /showfuel yes: double fuel percent / no: 255
 };
@@ -1397,7 +1428,7 @@ struct IS_PIT // PIT stop (stop at pit garage)
 	word	Flags;		// player flags
 
 	byte	FuelAdd;	// /showfuel yes: fuel added percent / no: 255
-	byte	Penalty;	// current penalty value (see below)
+	byte	Penalty;	// current penalty value (PENALTY_x)
 	byte	NumStops;	// number of pit stops
 	byte	Sp3;
 
@@ -1425,7 +1456,7 @@ struct IS_PLA // Pit LAne
 	byte	ReqI;		// 0
 	byte	PLID;		// player's unique id
 
-	byte	Fact;		// pit lane fact (see below)
+	byte	Fact;		// pit lane fact (PITLANE_x)
 	byte	Sp1;
 	byte	Sp2;
 	byte	Sp3;
@@ -1446,7 +1477,7 @@ struct IS_CCH // Camera CHange
 	byte	ReqI;		// 0
 	byte	PLID;		// player's unique id
 
-	byte	Camera;		// view identifier (see below)
+	byte	Camera;		// view identifier (VIEW_x)
 	byte	Sp1;
 	byte	Sp2;
 	byte	Sp3;
@@ -1459,9 +1490,9 @@ struct IS_PEN // PENalty (given or cleared)
 	byte	ReqI;		// 0
 	byte	PLID;		// player's unique id
 
-	byte	OldPen;		// old penalty value (see below)
-	byte	NewPen;		// new penalty value (see below)
-	byte	Reason;		// penalty reason (see below)
+	byte	OldPen;		// old penalty value (PENALTY_x)
+	byte	NewPen;		// new penalty value
+	byte	Reason;		// penalty reason (PENR_x)
 	byte	Sp3;
 };
 
@@ -1498,7 +1529,7 @@ struct IS_PFL // Player FLags (help flags changed)
 	byte	ReqI;		// 0
 	byte	PLID;		// player's unique id
 
-	word	Flags;		// player flags (see below)
+	word	Flags;		// player flags (PIF_x)
 	word	Spare;
 };
 
@@ -1514,11 +1545,11 @@ struct IS_FIN // FINished race notification (not a final result - use IS_RES)
 
 	byte	SpA;
 	byte	NumStops;	// number of pit stops
-	byte	Confirm;	// confirmation flags: disqualified etc - see below
+	byte	Confirm;	// confirmation flags: disqualified etc (CONF_x)
 	byte	SpB;
 
 	word	LapsDone;	// laps completed
-	word	Flags;		// player flags: help settings etc - see below
+	word	Flags;		// player flags: help settings etc (PIF_x)
 };
 
 struct IS_RES // RESult (qualify or confirmed finish)
@@ -1538,11 +1569,11 @@ struct IS_RES // RESult (qualify or confirmed finish)
 
 	byte	SpA;
 	byte	NumStops;	// number of pit stops
-	byte	Confirm;	// confirmation flags: disqualified etc - see below
+	byte	Confirm;	// confirmation flags: disqualified etc (CONF_x)
 	byte	SpB;
 
 	word	LapsDone;	// laps completed
-	word	Flags;		// player flags: help settings etc - see below
+	word	Flags;		// player flags: help settings etc (PIF_x)
 
 	byte	ResultNum;	// finish or qualify pos (0 = win / 255 = not added to table)
 	byte	NumRes;		// total number of results (qualify doesn't always add a new one)
@@ -1560,14 +1591,16 @@ struct IS_RES // RESult (qualify or confirmed finish)
 // informing you that the Vote Action (VOTE_END / VOTE_RESTART / VOTE_QUALIFY) is about
 // to take place.  Any IS_REO received before the SMALL_VTA is sent will be ignored.
 
+const int REO_MAX_PLAYERS = 48; // NOTE: Increase if MAX_CARS_S2 is increased
+
 struct IS_REO // REOrder (when race restarts after qualifying)
 {
-	byte	Size;		// 44
+	byte	Size;		// 52
 	byte	Type;		// ISP_REO
 	byte	ReqI;		// 0 unless this is a reply to an TINY_REO request
 	byte	NumP;		// number of players in race
 
-	byte	PLID[40];	// all PLIDs in new order
+	byte	PLID[REO_MAX_PLAYERS];	// all PLIDs in new order
 };
 
 // To request an IS_REO packet at any time, send this IS_TINY:
@@ -1722,7 +1755,7 @@ enum
 #define PIF_RESERVED_4		4
 #define PIF_AUTOGEARS		8
 #define PIF_SHIFTER			16
-#define PIF_RESERVED_32		32
+#define PIF_FLEXIBLE_STEER	32
 #define PIF_HELP_B			64
 #define PIF_AXIS_CLUTCH		128
 #define PIF_INPITS			256
@@ -1963,6 +1996,7 @@ struct CompCar // Car info in 28 bytes - there is an array of these in the MCI (
 
 #define CCI_BLUE		1		// this car is in the way of a driver who is a lap ahead
 #define CCI_YELLOW		2		// this car is slow or stopped and in a dangerous place
+#define CCI_OOB			4		// this car is outside the path
 
 #define CCI_LAG			32		// this car is lagging (missing or delayed position packets)
 
@@ -1999,7 +2033,7 @@ struct IS_MCI // Multi Car Info - if more than MCI_MAX_CARS in race then more th
 struct CarContact // 16 bytes: one car in a contact - two of these in the IS_CON (below)
 {
 	byte	PLID;
-	byte	Info;		// like Info byte in CompCar (CCI_BLUE / CCI_YELLOW / CCI_LAG)
+	byte	Info;		// like Info byte in CompCar (CCI_BLUE / CCI_YELLOW / CCI_OOB / CCI_LAG)
 	byte	Sp2;		// spare
 	char	Steer;		// front wheel steer in degrees (right positive)
 	
@@ -2019,13 +2053,15 @@ struct CarContact // 16 bytes: one car in a contact - two of these in the IS_CON
 
 struct IS_CON // CONtact - between two cars (A and B are sorted by PLID)
 {
-	byte	Size;		// 40
+	byte	Size;		// 44
 	byte	Type;		// ISP_CON
 	byte	ReqI;		// 0
 	byte	Zero;
 
 	word	SpClose;	// high 4 bits: reserved / low 12 bits: closing speed (10 = 1 m/s)
-	word	Time;		// looping time stamp (hundredths - time since reset - like TINY_GTH)
+	word	SpW;
+
+	unsigned	Time;	// time stamp
 
 	CarContact	A;
 	CarContact	B;
@@ -2046,13 +2082,15 @@ struct CarContOBJ // 8 bytes: car in a contact with an object
 
 struct IS_OBH // OBject Hit - car hit an autocross object or an unknown object
 {
-	byte	Size;		// 24
+	byte	Size;		// 28
 	byte	Type;		// ISP_OBH
 	byte	ReqI;		// 0
 	byte	PLID;		// player's unique id
 
 	word	SpClose;	// high 4 bits: reserved / low 12 bits: closing speed (10 = 1 m/s)
-	word	Time;		// looping time stamp (hundredths - time since reset - like TINY_GTH)
+	word	SpW;
+
+	unsigned	Time;	// time stamp (ms)
 
 	CarContOBJ	C;
 
@@ -2076,14 +2114,16 @@ struct IS_OBH // OBject Hit - car hit an autocross object or an unknown object
 
 struct IS_HLV // Hot Lap Validity - off track / hit wall / speeding in pits / out of bounds
 {
-	byte	Size;		// 16
+	byte	Size;		// 20
 	byte	Type;		// ISP_HLV
 	byte	ReqI;		// 0
 	byte	PLID;		// player's unique id
 
 	byte	HLVC;		// 0: ground / 1: wall / 4: speeding / 5: out of bounds
 	byte	Sp1;
-	word	Time;		// looping time stamp (hundredths - time since reset - like TINY_GTH)
+	word	SpW;
+
+	unsigned	Time;	// time stamp
 
 	CarContOBJ	C;
 };
@@ -2100,11 +2140,11 @@ struct IS_UCO // User Control Object
 	byte	PLID;		// player's unique id
 
 	byte	Sp0;
-	byte	UCOAction;
+	byte	UCOAction;	// action (UCO_x)
 	byte	Sp2;
 	byte	Sp3;
 
-	unsigned	Time;	// hundredths of a second since start (as in SMALL_RTP)
+	unsigned	Time;	// ms since start (as in SMALL_RTP)
 	
 	CarContOBJ	C;
 
@@ -2149,7 +2189,7 @@ struct IS_CSC // Car State Changed - reports a change in a car's state (currentl
 	byte	Sp2;
 	byte	Sp3;
 
-	unsigned	Time;	// hundredths of a second since start (as in SMALL_RTP)
+	unsigned	Time;	// ms since start (as in SMALL_RTP)
 
 	CarContOBJ	C;
 };
@@ -2272,24 +2312,7 @@ enum
 // PMO_FILE_END
 
 // If PMO_FILE_END is set in a PMO_LOADING_FILE packet, LFS has reached the end of
-// a layout file which it is loading.  The added objects will then be optimised.
-
-// Optimised in this case means that static vertex buffers will be created for all
-// objects, to greatly improve the frame rate.  The problem with this is that when
-// there are many objects loaded, optimisation causes a significant glitch which can
-// be long enough to cause a driver who is cornering to lose control and crash.
-
-// PMO_FILE_END can also be set in an IS_AXM with PMOAction of PMO_ADD_OBJECTS.
-// This causes all objects to be optimised.  It is important not to set PMO_FILE_END
-// in every packet you send to add objects or you will cause severe glitches on the
-// clients computers.  It is ok to have some objects on the track which are not
-// optimised.  So if you have a few objects that are being removed and added
-// occasionally, the best advice is not to request optimisation at all.  Only
-// request optimisation (by setting PMO_FILE_END) if you have added so many objects
-// that it is needed to improve the frame rate.
-
-// NOTE 1) LFS makes sure that all objects are optimised when the race restarts.
-// NOTE 2) In the 'more' section of free view there is info about optimised objects.
+// a layout file which it is loading.
 
 // If you are using InSim to send many packets of objects (for example loading an
 // entire layout through InSim) then you must take care of the bandwidth and buffer
@@ -2598,7 +2621,7 @@ struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR free view mode)
 // --------------------------
 
 // The "Time" value in the packet is used for camera smoothing.  A zero Time means instant
-// positioning.  Any other value (milliseconds) will cause the camera to move smoothly to
+// positioning.  Any other value (ms) will cause the camera to move smoothly to
 // the requested position in that time.  This is most useful in free view camera modes or
 // for smooth changes of internal view when using the ISS_VIEW_OVERRIDE flag.
 
@@ -2628,38 +2651,38 @@ struct IS_CPP // Cam Pos Pack - Full camera packet (in car OR free view mode)
 // Request the current time at any point with this IS_TINY:
 
 // ReqI: non-zero		(returned in the reply)
-// SubT: TINY_GTH		(Get Time in Hundredths)
+// SubT: TINY_GTM		(Get Time in Ms)
 
 // The time will be sent back in this IS_SMALL:
 
 // ReqI: non-zero		(as received in the request packet)
 // SubT: SMALL_RTP		(Race Time Packet)
-// UVal: Time			(hundredths of a second since start of race or replay)
+// UVal: Time			(ms since start of race or replay)
 
 // You can stop or start time in LFS and while it is stopped you can send packets to move
-// time in steps.  Time steps are specified in hundredths of a second.
+// time in steps.  Time steps are specified in ms.
 // Warning: unlike pausing, this is a "trick" to LFS and the program is unaware of time
 // passing so you must not leave it stopped because LFS is unusable in that state.
 // This packet is not available in live multiplayer mode.
 
-// Stop and Start with this IS_SMALL:
+// Stop and Start with this IS_SMALL: [NOTE - CURRENTLY UNAVAILABLE]
 
 // ReqI: 0
 // SubT: SMALL_TMS		(TiMe Stop)
 // UVal: stop			(1 - stop / 0 - carry on)
 
-// When STOPPED, make time step updates with this IS_SMALL:
+// When STOPPED, make time step updates with this IS_SMALL: [NOTE - CURRENTLY UNAVAILABLE]
 
 // ReqI: 0
 // SubT: SMALL_STP		(STeP)
-// UVal: number			(number of hundredths of a second to update)
+// UVal: number			(number of ms to update)
 
 
 // REPLAY CONTROL
 // ==============
 
 // You can load a replay or set the position in a replay with an IS_RIP packet.
-// Replay positions and lengths are specified in hundredths of a second.
+// Replay positions and lengths are specified in ms.
 // LFS will reply with another IS_RIP packet when the request is completed.
 
 struct IS_RIP // Replay Information Packet
@@ -2674,8 +2697,8 @@ struct IS_RIP // Replay Information Packet
 	byte	Options;	// various options - see below
 	byte	Sp3;
 
-	unsigned	CTime;	// (hundredths) request: destination / reply: position
-	unsigned	TTime;	// (hundredths) request: zero / reply: replay length
+	unsigned	CTime;	// (ms) request: destination / reply: position
+	unsigned	TTime;	// (ms) request: zero / reply: replay length
 
 	char	RName[64];	// zero or replay name - last byte must be zero
 };
@@ -2776,7 +2799,7 @@ enum
 // If you draw buttons in this area, the area will be kept clear to
 // avoid overlapping LFS buttons with your InSim program's buttons.
 // Buttons outside that area will not have a space kept clear.
-// You can also make buttons visible in all screens - see below.
+// You can also make buttons visible in all screens - see INST_ALWAYS_ON below.
 
 // To delete one button or a range of buttons or clear all buttons, send this packet:
 
@@ -2946,7 +2969,7 @@ struct IS_BTT // BuTton Type - sent back when user types into a text entry butto
 
 struct OutSimPack
 {
-	unsigned	Time;		// time in milliseconds (to check order)
+	unsigned	Time;		// time in ms (to check order)
 
 	Vector		AngVel;		// 3 floats, angular velocity vector
 	float		Heading;	// anticlockwise from above (Z)
@@ -2985,7 +3008,7 @@ struct OutSimPack
 
 struct OutGaugePack
 {
-	unsigned	Time;			// time in milliseconds (to check order)
+	unsigned	Time;			// time in ms (to check order)
 
 	char		Car[4];			// Car name
 	word		Flags;			// Info (see OG_x below)
