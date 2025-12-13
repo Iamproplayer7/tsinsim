@@ -7,9 +7,9 @@ export enum TinyType {
 	TINY_VTC,		//  5 - both ways		: game vote cancel (info or request)
 	TINY_SCP,		//  6 - info request	: send camera pos
 	TINY_SST,		//  7 - info request	: send state info
-	TINY_GTH,		//  8 - info request	: get time in hundredths (i.e. SMALL_RTP)
+	TINY_GTM,		//  8 - info request	: get time in ms (in SMALL_RTP)
 	TINY_MPE,		//  9 - info			: multi player end
-	TINY_ISM,		// 10 - info request	: get multiplayer info (i.e. ISP_ISM)
+	TINY_ISM,		// 10 - info request	: get multiplayer info (in ISP_ISM)
 	TINY_REN,		// 11 - info			: race end (return to race setup screen)
 	TINY_CLR,		// 12 - info			: all players cleared from race
 	TINY_NCN,		// 13 - info request	: get NCN for all connections
@@ -27,5 +27,7 @@ export enum TinyType {
 	TINY_AXM,		// 25 - info request	: send IS_AXM packets for the entire layout
 	TINY_SLC,		// 26 - info request	: send IS_SLC packets for all connections
 	TINY_MAL,		// 27 - info request	: send IS_MAL listing the currently allowed mods
-	TINY_PLH,		// 28 - info request	: send IS_PLH listing player handicaps
+	TINY_PLH,		// 28 - info request	: send IS_PLH listing player handicaps,
+	TINY_IPB,		// 29 - info request	: send IS_IPB listing the IP bans
+	TINY_LCL,		// 30 - info request	: send a SMALL_LCL for local car's lights
 };
