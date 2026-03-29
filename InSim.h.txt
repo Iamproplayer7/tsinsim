@@ -22,7 +22,12 @@ const int INSIM_VERSION = 10;
 // CHANGES
 // =======
 
-// 0.8A (INSIM_VERSION increased to 10)
+// 0.8B33
+// ------
+// Layout objects are no longer converted from old version if InSimVer >= 10
+// New value for RaceLaps: 255 - no lap timing
+
+// 0.8B (INSIM_VERSION increased to 10)
 // ----
 // TINY_LCL requests a SMALL_LCL (local car lights)
 // New value for Player flags - PIF_FLEXIBLE_STEER
@@ -174,6 +179,7 @@ const int INSIM_VERSION = 10;
 // 1-99    : number of laps...   laps  = rl
 // 100-190 : 100 to 1000 laps... laps  = (rl - 100) * 10 + 100
 // 191-238 : 1 to 48 hours...    hours = rl - 190
+// 255     : no lap timing
 
 
 // InSim PACKETS
@@ -1317,7 +1323,7 @@ struct IS_NPL // New PLayer joining race (if PLID already exists, then leaving p
 
 	byte	UCID;		// connection's unique id
 	byte	PType;		// bit 0: female / bit 1: AI / bit 2: remote
-	word	Flags;		// player flags
+	word	Flags;		// player flags (PIF_x)
 
 	char	PName[24];	// nickname
 	char	Plate[8];	// number plate - NO ZERO AT END!
@@ -1333,7 +1339,7 @@ struct IS_NPL // New PLayer joining race (if PLID already exists, then leaving p
 
 	byte	RWAdj;		// low 4 bits: tyre width reduction (rear)
 	byte	FWAdj;		// low 4 bits: tyre width reduction (front)
-	byte	Sp2;
+	byte	RIFlags;	// racer info flags (RIF_x)
 	byte	Sp3;
 
 	byte	SetF;		// setup flags (see below)
@@ -1754,16 +1760,44 @@ enum
 #define PIF_RESERVED_2		2
 #define PIF_RESERVED_4		4
 #define PIF_AUTOGEARS		8
-#define PIF_SHIFTER			16
-#define PIF_FLEXIBLE_STEER	32
-#define PIF_HELP_B			64
-#define PIF_AXIS_CLUTCH		128
-#define PIF_INPITS			256
-#define PIF_AUTOCLUTCH		512
-#define PIF_MOUSE			1024
-#define PIF_KB_NO_HELP		2048
-#define PIF_KB_STABILISED	4096
-#define PIF_CUSTOM_VIEW		8192
+
+#define PIF_SHIFTER			0x10
+#define PIF_FLEXIBLE_STEER	0x20
+#define PIF_HELP_B			0x40
+#define PIF_AXIS_CLUTCH		0x80
+
+#define PIF_INPITS			0x0100
+#define PIF_AUTOCLUTCH		0x0200
+#define PIF_MOUSE			0x0400
+#define PIF_KB_NO_HELP		0x0800
+
+#define PIF_KB_STABILISED	0x1000
+#define PIF_CUSTOM_VIEW		0x2000
+
+// Racer info flags
+
+#define RIF_LATE_START		1 // joined after race started
+#define PIF_RESERVED_2		2
+#define PIF_RESERVED_4		4
+#define RIF_SAI_NON_SOLID	8 // unmovable object without collision
+
+#define RIF_SAI_0			0x10
+#define RIF_SAI_1			0x20
+
+// SAIType (as in /sai command) can be determined from the Racer info flags
+
+#define RIF_SAI_MASK		(RIF_SAI_0 | RIF_SAI_1)
+const int RIF_SAI_SHIFTS	= 4;
+// SAIType = (RIFlags & RIF_SAI_MASK) >> RIF_SAI_SHIFTS
+
+enum // values for SAIType
+{
+	SAI_MOVE,		// 0 - movable
+	SAI_FLOAT,		// 1 - unmovable / floating
+	SAI_GROUND,		// 2 - unmovable / ground level
+	SAI_ANGLE,		// 3 - unmovable / ground level / ground angle
+	SAI_NUM
+};
 
 // Tyre compounds (4 byte order: rear L, rear R, front L, front R)
 
@@ -1799,11 +1833,20 @@ const int NOT_CHANGED = 255;
 
 // HOSTF_CAN_VOTE		1
 // HOSTF_CAN_SELECT		2
+
 // HOSTF_MID_RACE		32
 // HOSTF_MUST_PIT		64
 // HOSTF_CAN_RESET		128
-// HOSTF_FCV			256
-// HOSTF_CRUISE			512
+
+// HOSTF_FCV			0x100
+// HOSTF_CRUISE			0x200
+// HOSTF_SHOW_FUEL		0x400
+// HOSTF_CAN_REFUEL		0x800
+// HOSTF_ALLOW_MODS		0x1000
+// HOSTF_UNAPPROVED		0x2000
+// HOSTF_TEAMARROWS		0x4000
+// HOSTF_NO_FLOOD		0x8000
+
 
 // Passengers byte
 
@@ -1961,7 +2004,7 @@ struct NodeLap // Car info in 6 bytes - there is an array of these in the NLP (b
 	byte	Position;	// current race position: 0 = unknown, 1 = leader, etc...
 };
 
-const int NLP_MAX_CARS = 40;
+const int NLP_MAX_CARS = 48; // NOTE: Increase if MAX_CARS_S2 is increased
 
 struct IS_NLP // Node and Lap Packet - variable size
 {

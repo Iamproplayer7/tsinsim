@@ -34,7 +34,7 @@ export class IS_NPL extends Receivable {
 
     @byte() RWAdj = 0;
     @byte() FWADj = 0;
-    @byte() private readonly Sp2 = 0;
+    @byte() RIFFlags = 0;
     @byte() private readonly Sp3 = 0;
 
     @byte() SetF: SetupFlags | 0 = 0;
