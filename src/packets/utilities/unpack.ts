@@ -1,8 +1,8 @@
 import parseLFSMessage from 'parse-lfs-message';
 import { Vector3 } from '../../utilities/vector.js';
 
-export const PacketUnpack = (vk: { [key: string]: { value: string, type: string, length: number } }, buffer: Buffer): { [key: string]: string | number | Vector3 } => {
-    const data: { [key: string]: string | number | Vector3 } = {};
+export const PacketUnpack = (vk: { [key: string]: { value: string, type: string, length: number } }, buffer: Buffer): { [key: string]: string | number | Vector3 | Array<number> } => {
+    const data: { [key: string]: string | number | Vector3 | Array<number> } = {};
 
     var offset: number = 0;
     for(const key of Object.keys(vk)) {
@@ -12,6 +12,9 @@ export const PacketUnpack = (vk: { [key: string]: { value: string, type: string,
         if(type != 'char') {
             if(type == 'byte') {
                 data[key] = buffer.readUInt8(offset);
+            }
+            else if(type == 'byteArray') {
+                data[key] = Array.from(buffer.subarray(offset, offset + length));
             }
             else if(type == 'word') {
                 data[key] = buffer.readUInt16LE(offset);

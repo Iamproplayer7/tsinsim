@@ -12,6 +12,10 @@ export const byte = () => {
     return Reflect.metadata(key, { type: 'byte', length: 1 });
 }
 
+export const byteArray = (length: number) => {
+    return Reflect.metadata(key, { type: 'byteArray', length: length });
+}
+
 /* 2-byte unsigned integer */
 export const word = () => {
     return Reflect.metadata(key, { type: 'word', length: 2 });
