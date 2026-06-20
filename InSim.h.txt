@@ -10,10 +10,10 @@
 // things about its state, and the external program requesting info and
 // controlling LFS with special packets, text commands or keypresses.
 
-// NOTE: This text file was written with a TAB size equal to 4 spaces.
+// NOTE: This file uses a TAB size of 4 spaces.
 
 
-// INSIM VERSION NUMBER (updated for version 0.7A)
+// INSIM VERSION NUMBER
 // ====================
 
 const int INSIM_VERSION = 10;
@@ -21,6 +21,20 @@ const int INSIM_VERSION = 10;
 
 // CHANGES
 // =======
+
+// 0.8C5
+// -----
+// CCI_RETIRED bit added to the CompCar structure
+// Players with unmovable objects are now excluded from regular MCI packets
+// - they are still included in MCI sent for TINY_MCI requests
+
+// 0.8C3
+// -----
+// ISF_SET option to receive IS_SET packets when a player sends their setup
+
+// 0.8B36
+// ------
+// Support for unmovable objects - see RIFlags / RIF_x / Racer info flags
 
 // 0.8B33
 // ------
@@ -156,7 +170,7 @@ const int INSIM_VERSION = 10;
 // FIX: OutGaugePack ID was always zero regardless of ID in cfg.txt
 // FIX: InSim camera with vertical pitch would cause LFS to crash
 
-// 0.5Z (no change to INSIM_VERSION)
+// 0.5Z
 // ----
 // NLP / MCI packets are now output at regular intervals
 // CCI_LAG bit added to the CompCar structure
@@ -241,18 +255,19 @@ struct IS_ISI // InSim Init - packet to initialise the InSim system
 
 // NOTE 3) Flags field (set the relevant bits to turn on the option):
 
-#define ISF_RES_0		   1	// bit  0: spare
-#define ISF_RES_1		   2	// bit  1: spare
-#define ISF_LOCAL		   4	// bit  2: guest or single player
-#define ISF_MSO_COLS	   8	// bit  3: keep colours in MSO text
-#define ISF_NLP			  16	// bit  4: receive NLP packets
-#define ISF_MCI			  32	// bit  5: receive MCI packets
-#define ISF_CON			  64	// bit  6: receive CON packets
-#define ISF_OBH			 128	// bit  7: receive OBH packets
-#define ISF_HLV			 256	// bit  8: receive HLV packets
-#define ISF_AXM_LOAD	 512	// bit  9: receive AXM when loading a layout
-#define ISF_AXM_EDIT	1024	// bit 10: receive AXM when changing objects
-#define ISF_REQ_JOIN	2048	// bit 11: process join requests
+#define ISF_RES_0		1		// bit  0: spare
+#define ISF_RES_1		2		// bit  1: spare
+#define ISF_LOCAL		4		// bit  2: guest or single player
+#define ISF_MSO_COLS	8		// bit  3: keep colours in MSO text
+#define ISF_NLP			0x10	// bit  4: receive NLP packets
+#define ISF_MCI			0x20	// bit  5: receive MCI packets
+#define ISF_CON			0x40	// bit  6: receive CON packets
+#define ISF_OBH			0x80	// bit  7: receive OBH packets
+#define ISF_HLV			0x0100	// bit  8: receive HLV packets
+#define ISF_AXM_LOAD	0x0200	// bit  9: receive AXM when loading a layout
+#define ISF_AXM_EDIT	0x0400	// bit 10: receive AXM when changing objects
+#define ISF_REQ_JOIN	0x0800	// bit 11: process join requests
+#define ISF_SET			0x1000	// bit 12: receive SET packets from guests who send their setup
 
 // In most cases you should not set both ISF_NLP and ISF_MCI flags
 // because all IS_NLP information is included in the IS_MCI packet.
@@ -350,6 +365,7 @@ enum // the second byte of any packet is one of these
 	ISP_IPB,		// 67 - both ways		: set IP bans
 	ISP_AIC,		// 68 - instruction		: set AI control value
 	ISP_AII,		// 69 - info			: info about AI car
+	ISP_SET,		// 70 - info			: output a sent setup
 };
 
 enum // the fourth byte of an IS_TINY packet is one of these
@@ -1167,7 +1183,7 @@ struct IS_SLC // SeLected Car - sent when a connection selects a car (empty if n
 	byte	ReqI;		// 0 unless this is a reply to a TINY_SLC request
 	byte	UCID;		// connection's unique id (0 = host)
 
-	char	CName[4];	// car name
+	char	CName[4];	// skin prefix
 };
 
 // NOTE: If a new guest joins and does have a car selected then an IS_SLC will be sent
@@ -1328,7 +1344,7 @@ struct IS_NPL // New PLayer joining race (if PLID already exists, then leaving p
 	char	PName[24];	// nickname
 	char	Plate[8];	// number plate - NO ZERO AT END!
 
-	char	CName[4];	// car name
+	char	CName[4];	// skin prefix
 	char	SName[16];	// skin name - MAX_CAR_TEX_NAME
 	byte	Tyres[4];	// compounds
 
@@ -1777,8 +1793,8 @@ enum
 // Racer info flags
 
 #define RIF_LATE_START		1 // joined after race started
-#define PIF_RESERVED_2		2
-#define PIF_RESERVED_4		4
+#define RIF_RESERVED_2		2
+#define RIF_RESERVED_4		4
 #define RIF_SAI_NON_SOLID	8 // unmovable object without collision
 
 #define RIF_SAI_0			0x10
@@ -2040,6 +2056,7 @@ struct CompCar // Car info in 28 bytes - there is an array of these in the MCI (
 #define CCI_BLUE		1		// this car is in the way of a driver who is a lap ahead
 #define CCI_YELLOW		2		// this car is slow or stopped and in a dangerous place
 #define CCI_OOB			4		// this car is outside the path
+#define CCI_RETIRED		8		// this car has been retired
 
 #define CCI_LAG			32		// this car is lagging (missing or delayed position packets)
 
@@ -2060,6 +2077,9 @@ struct IS_MCI // Multi Car Info - if more than MCI_MAX_CARS in race then more th
 
 	CompCar	Info[MCI_MAX_CARS]; // car info for each player, 1 to MCI_MAX_CARS (NumC)
 };
+
+// NOTE: regular IS_MCI packets do not include a CompCar for unmovable object players
+// IS_MCI requested by a TINY_MCI do include a CompCar for all players including unmovable
 
 // You can change the rate of NLP or MCI after initialisation by sending this IS_SMALL:
 
@@ -2170,6 +2190,31 @@ struct IS_HLV // Hot Lap Validity - off track / hit wall / speeding in pits / ou
 
 	CarContOBJ	C;
 };
+
+// Set the ISF_SET flag in the IS_ISI to receive setups when a guest sends their setup
+
+struct IS_SET // SETup
+{
+	byte	Size;		// 136 (may change in future for a later setup version)
+	byte	Type;		// ISP_SET
+	byte	ReqI;		// 0
+	byte	PLID;		// player's unique id
+
+	char	CName[4];	// skin prefix
+
+	unsigned	Spare;
+
+	byte	FuelLoad;	// FuelLoad at start
+	byte	Sp1;
+	byte	Sp2;
+	byte	Sp3;
+
+	byte	Setup	[120]; // nearly the same as a setup file without the first 12 bytes (but see note below about gear ratios)
+};
+
+// NOTE: gear ratios are in a different order
+// in the file: 7th gear then FDR then the other 6 gears
+// in 'Setup' which comes from RAM: all 7 gears then FDR
 
 
 // CONTROL - reports crossing an InSim checkpoint / entering an InSim circle (from layout)
