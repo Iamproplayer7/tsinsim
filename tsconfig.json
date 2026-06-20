@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		//"baseUrl": "./src",
+		"types": ["node"],
 		"typeRoots": ["node_modules/@types", "@types/node"],
 
 		"removeComments": true,
