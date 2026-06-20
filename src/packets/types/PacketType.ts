@@ -68,5 +68,6 @@ export enum PacketType {
 	ISP_PLH,		// 66 - both ways		: set player handicaps
 	ISP_IPB,		// 67 - both ways		: set IP bans
 	ISP_AIC,		// 68 - instruction		: set AI control value
-	ISP_AII,		// 69 - info			: info about AI car
+	ISP_AII,		// 69 - info			: info about AI car,
+	ISP_SET,		// 70 - info			: output a sent setup
 };

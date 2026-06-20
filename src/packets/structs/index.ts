@@ -44,6 +44,7 @@ export { IS_CON } from './receivable/IS_CON.js';
 export { IS_UCO } from './receivable/IS_UCO.js';
 export { IS_OCO } from './receivable/IS_OCO.js';
 export { IS_AII } from './receivable/IS_AII.js';
+export { IS_SET } from './receivable/IS_SET.js';
 
 /* * SENDABLE PACKETS */
 export { IS_TTC } from './sendable/IS_TTC.js';
