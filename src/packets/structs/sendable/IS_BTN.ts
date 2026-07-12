@@ -30,7 +30,7 @@ export class IS_BTN extends Sendable {
     @char(0) Text = '';
 
     pack(): Uint8Array { 
-        this.Text = unicodeToLfs(this.Text);
+        this.Text = this.Text.includes('\0') ? this.Text.split('\0').map(t => unicodeToLfs(t)).join('\0') : unicodeToLfs(this.Text);
  
         const buf = Buffer.from(this.Text, 'ascii').subarray(0, 239);
 
