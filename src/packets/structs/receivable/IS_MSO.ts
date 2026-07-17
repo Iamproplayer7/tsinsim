@@ -21,7 +21,7 @@ export class IS_MSO extends Receivable {
     unpack(data: Buffer): this {
         super.unpack(data);
 
-        this.Text = parseLFSMessage(data.subarray(8, data.length));
+        this.Text = data.subarray(8, data.length).toString().replaceAll(/\x00/g, '');
 
         return this;
     }
